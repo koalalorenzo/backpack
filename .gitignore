@@ -1,0 +1,6 @@
+*.nomad
+*.bin
+*.o
+*.a
+*.temp
+*secret*
