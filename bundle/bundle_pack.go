@@ -32,6 +32,10 @@ func GetBundleFromDirectory(dirPath string) (b *Bundle, err error) {
 	// Get all the .nomad packages
 	tempMap := map[string][]byte{}
 	for _, f := range files {
+		if filepath.Ext(f.Name()) != ".nomad" {
+			continue
+		}
+
 		templateBytes, terr := ioutil.ReadFile(filepath.Join(dirPath, f.Name()))
 		if terr != nil {
 			return nil, terr
