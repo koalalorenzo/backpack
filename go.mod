@@ -15,6 +15,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.1
+	github.com/vmihailenco/msgpack v4.0.4+incompatible
 	golang.org/x/exp/errors v0.0.0-20200819202907-27b6b2ade93b
 	golang.org/x/sys v0.0.0-20200821140526-fda516888d29 // indirect
 	gopkg.in/ini.v1 v1.60.1 // indirect
