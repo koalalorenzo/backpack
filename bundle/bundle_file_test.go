@@ -19,7 +19,7 @@ func TestBundleWrite(t *testing.T) {
 		Variables: map[string]interface{}{"datacenter": []string{"dc1", "dc2"}},
 	}
 
-	err = WriteBundleToFile(&b, tmpFile.Name())
+	err = WriteBundleToFile(b, tmpFile.Name())
 	if err != nil {
 		t.Error(err)
 	}

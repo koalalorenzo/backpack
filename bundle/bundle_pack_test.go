@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBudleReadDirectory(t *testing.T) {
+func TestBudlePackDirectory(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
