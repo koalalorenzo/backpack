@@ -6,11 +6,11 @@ import (
 	"github.com/vmihailenco/msgpack"
 )
 
-func (b *Bundle) Marshal() ([]byte, error) {
+func (b *Bundle) MarshalMsgPack() ([]byte, error) {
 	return msgpack.Marshal(b)
 }
 
-func (b *Bundle) Unmarshal(content []byte) error {
+func (b *Bundle) UnmarshalMsgPack(content []byte) error {
 	return msgpack.Unmarshal(content, b)
 }
 
@@ -21,13 +21,13 @@ func GetBundleFromFile(path string) (b *Bundle, err error) {
 		return
 	}
 
-	err = b.Unmarshal(bb)
+	err = b.UnmarshalMsgPack(bb)
 	return
 }
 
 // WriteBundleToFile will write a Bundle to file
 func WriteBundleToFile(b *Bundle, path string) (err error) {
-	bb, err := b.Marshal()
+	bb, err := b.MarshalMsgPack()
 	if err != nil {
 		return
 	}
