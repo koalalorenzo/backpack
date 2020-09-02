@@ -9,7 +9,7 @@ type Bundle struct {
 
 	// Variables are the key, value that will be replaced in the job files. The
 	// values specified here are the default ones
-	Variables map[string]string
+	Variables map[string]interface{}
 
 	// FormatVersion will help in case the Struct changes over time (as semver)
 	FormatVersion string

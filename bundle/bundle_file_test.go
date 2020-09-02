@@ -16,7 +16,7 @@ func TestBundleWrite(t *testing.T) {
 	b := Bundle{
 		Name:      "hello-world",
 		Version:   "0.1.0",
-		Variables: map[string]string{"datacenter": "dc1"},
+		Variables: map[string]interface{}{"datacenter": []string{"dc1", "dc2"}},
 	}
 
 	err = WriteBundleToFile(&b, tmpFile.Name())
