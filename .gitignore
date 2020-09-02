@@ -1,4 +1,3 @@
-*.nomad
 *.bin
 *.o
 *.a
