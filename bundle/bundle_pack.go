@@ -8,7 +8,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-//
+// GetBundleFromDirectory will look in a given path for backpack.yaml and .nomad
+// files to bundle them together.
 func GetBundleFromDirectory(dirPath string) (b *Bundle, err error) {
 	b = &Bundle{}
 
@@ -29,13 +30,15 @@ func GetBundleFromDirectory(dirPath string) (b *Bundle, err error) {
 	}
 
 	// Get all the .nomad packages
+	tempMap := map[string][]byte{}
 	for _, f := range files {
 		templateBytes, terr := ioutil.ReadFile(filepath.Join(dirPath, f.Name()))
 		if terr != nil {
 			return nil, terr
 		}
-		b.Templates[f.Name()] = templateBytes
+		tempMap[f.Name()] = templateBytes
 	}
+	b.Templates = tempMap
 
 	return b, nil
 }
