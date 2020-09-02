@@ -2,7 +2,6 @@ package bundle
 
 import (
 	"io/ioutil"
-	"log"
 	"path/filepath"
 
 	"gopkg.in/yaml.v2"
@@ -16,17 +15,17 @@ func GetBundleFromDirectory(dirPath string) (b *Bundle, err error) {
 	// get all the files available in the directory
 	files, err := ioutil.ReadDir(dirPath)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	// Get the backpack.yaml file
 	bpBytes, err := ioutil.ReadFile(filepath.Join(dirPath, "backpack.yaml"))
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	err = yaml.Unmarshal(bpBytes, b)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	// Get all the .nomad packages
