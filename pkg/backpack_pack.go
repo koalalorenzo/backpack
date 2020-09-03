@@ -30,7 +30,7 @@ func GetBackpackFromDirectory(dirPath string) (b *Backpack, err error) {
 	}
 
 	// Get all the .nomad packages
-	tempMap := map[string][]byte{}
+	tempMap := TemplatesType{}
 	for _, f := range files {
 		if filepath.Ext(f.Name()) != ".nomad" {
 			continue
