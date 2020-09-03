@@ -2,22 +2,51 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
+	"gitlab.com/qm64/backpack/bundle"
 )
 
 // unpackCmd represents the unpack command
 var unpackCmd = &cobra.Command{
-	Use:   "unpack",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use:   "unpack [file.backpack]",
+	Short: "Opens a Backpack file to explore content",
+	Long: `Explodes the backpack inside a directory. This is useful to edit a 
+Backpack, inspecting it or seeing default values.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+The Backpack includes:
+- backpack.yaml (containing metadata and default values)
+- *.nomad (representing the various go templates of Nomad Jobs)
+`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("unpack called")
+		cwd, err := os.Getwd()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		b, err := bundle.GetBundleFromFile(args[0])
+		if err != nil {
+			log.Fatalf("Error parsing the bundle: %s", err)
+		}
+
+		// Checks if a custom directory has been specified, otherwise unpack in
+		// the backpack name.
+		directory := cmd.Flag("dir").Value.String()
+		if directory == "" {
+			directory = filepath.Join(cwd, fmt.Sprintf("%s-%s", b.Name, b.Version))
+			err = os.Mkdir(directory, 0744)
+			if err != nil {
+				log.Fatalf("Error creating directory: %s", err)
+			}
+		}
+
+		err = bundle.UnpackBundleInDirectory(&b, directory)
+		if err != nil {
+			log.Fatalf("Error unpacking: %s", err)
+		}
 	},
 }
 
@@ -32,5 +61,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// unpackCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	unpackCmd.Flags().StringP("dir", "d", "", "specifies the directory to write into")
 }
