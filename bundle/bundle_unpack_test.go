@@ -22,7 +22,7 @@ func TestBudleUnpack(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Get the bundle
-	b, err := GetBundleFromFile(filepath.Join(bundleTestDirPath, "redis.msgpack"))
+	b, err := GetBundleFromFile(filepath.Join(bundleTestDirPath, "redis.backpack"))
 	assert.NoError(t, err)
 
 	t.Logf("Temp dir: %s", tempDir)

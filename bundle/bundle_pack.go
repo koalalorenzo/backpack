@@ -1,6 +1,7 @@
 package bundle
 
 import (
+	"encoding/base64"
 	"io/ioutil"
 	"path/filepath"
 
@@ -39,7 +40,11 @@ func GetBundleFromDirectory(dirPath string) (b *Bundle, err error) {
 		if terr != nil {
 			return nil, terr
 		}
-		tempMap[f.Name()] = templateBytes
+
+		// Encode files in base64
+		b64file := base64.StdEncoding.EncodeToString(templateBytes)
+
+		tempMap[f.Name()] = []byte(b64file)
 	}
 	b.Templates = tempMap
 

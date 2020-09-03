@@ -14,8 +14,6 @@ func TestBudlePackDirectory(t *testing.T) {
 	bundlePackageGoDir := filepath.Dir(filename)
 	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "test_bundle/")
 
-	t.Logf("path: %s", bundleTestDirPath)
-
 	b, err := GetBundleFromDirectory(bundleTestDirPath)
 	assert.NoError(t, err)
 
