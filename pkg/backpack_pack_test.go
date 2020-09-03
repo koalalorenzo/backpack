@@ -1,4 +1,4 @@
-package bundle
+package pkg
 
 import (
 	"path/filepath"
@@ -8,13 +8,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBudlePackDirectory(t *testing.T) {
+func TestBackpackPackDirectory(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
 	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "test_bundle/")
 
-	b, err := GetBundleFromDirectory(bundleTestDirPath)
+	b, err := GetBackpackFromDirectory(bundleTestDirPath)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "redis", b.Name)

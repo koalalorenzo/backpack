@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"gitlab.com/qm64/backpack/bundle"
+	"gitlab.com/qm64/backpack/pkg"
 )
 
 // packCmd represents the pack command
@@ -23,7 +23,7 @@ the nomad job files written as go templates. Performs the opposite of unpack.
 			log.Fatal(err)
 		}
 
-		b, err := bundle.GetBundleFromDirectory(args[0])
+		b, err := pkg.GetBackpackFromDirectory(args[0])
 		if err != nil {
 			log.Fatalf("Error generating the backpack from the directory: %s", err)
 		}
@@ -34,7 +34,7 @@ the nomad job files written as go templates. Performs the opposite of unpack.
 			writeTo = fileFlag
 		}
 
-		err = bundle.WriteBundleToFile(*b, writeTo)
+		err = pkg.WriteBackpackToFile(*b, writeTo)
 		if err != nil {
 			log.Fatalf("Error writing to file: %s", err)
 		}

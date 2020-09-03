@@ -1,4 +1,4 @@
-package bundle
+package pkg
 
 import (
 	"io/ioutil"
@@ -6,8 +6,8 @@ import (
 	"github.com/vmihailenco/msgpack"
 )
 
-// GetBundleFromFile will read and get a Bundle from a file path
-func GetBundleFromFile(path string) (b Bundle, err error) {
+// GetBackpackFromFile will read and get a Backpack from a file path
+func GetBackpackFromFile(path string) (b Backpack, err error) {
 	bb, err := ioutil.ReadFile(path)
 	if err != nil {
 		return
@@ -17,8 +17,8 @@ func GetBundleFromFile(path string) (b Bundle, err error) {
 	return
 }
 
-// WriteBundleToFile will write a Bundle to file
-func WriteBundleToFile(b Bundle, path string) (err error) {
+// WriteBackpackToFile will write a Backpack to file
+func WriteBackpackToFile(b Backpack, path string) (err error) {
 	bb, err := msgpack.Marshal(&b)
 	if err != nil {
 		return

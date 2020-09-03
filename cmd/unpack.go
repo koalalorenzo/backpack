@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
-	"gitlab.com/qm64/backpack/bundle"
+	"gitlab.com/qm64/backpack/pkg"
 )
 
 // unpackCmd represents the unpack command
@@ -27,9 +27,9 @@ The Backpack includes:
 			log.Fatal(err)
 		}
 
-		b, err := bundle.GetBundleFromFile(args[0])
+		b, err := pkg.GetBackpackFromFile(args[0])
 		if err != nil {
-			log.Fatalf("Error parsing the bundle: %s", err)
+			log.Fatalf("Error parsing the backpack: %s", err)
 		}
 
 		// Checks if a custom directory has been specified, otherwise unpack in
@@ -43,7 +43,7 @@ The Backpack includes:
 			}
 		}
 
-		err = bundle.UnpackBundleInDirectory(&b, directory)
+		err = pkg.UnpackBackpackInDirectory(&b, directory)
 		if err != nil {
 			log.Fatalf("Error unpacking: %s", err)
 		}

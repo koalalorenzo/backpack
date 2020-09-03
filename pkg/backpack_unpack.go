@@ -1,4 +1,4 @@
-package bundle
+package pkg
 
 import (
 	"encoding/base64"
@@ -8,8 +8,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// UnpackBundleInDirectory will write the bundle's backpack into a directory.
-func UnpackBundleInDirectory(b *Bundle, dirPath string) (err error) {
+// UnpackBackpackInDirectory will write the Backpack's backpack into a directory.
+func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
 	for n, b64f := range b.Templates {
 		// Decode Base64
 		var f []byte

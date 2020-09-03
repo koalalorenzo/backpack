@@ -1,4 +1,4 @@
-package bundle
+package pkg
 
 import (
 	"crypto/sha256"
@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBudleUnpack(t *testing.T) {
+func TestBackpackUnpack(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
@@ -22,11 +22,11 @@ func TestBudleUnpack(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Get the bundle
-	b, err := GetBundleFromFile(filepath.Join(bundleTestDirPath, "redis.backpack"))
+	b, err := GetBackpackFromFile(filepath.Join(bundleTestDirPath, "redis.backpack"))
 	assert.NoError(t, err)
 
 	t.Logf("Temp dir: %s", tempDir)
-	err = UnpackBundleInDirectory(&b, tempDir)
+	err = UnpackBackpackInDirectory(&b, tempDir)
 	assert.NoError(t, err)
 
 	// Validate that the files are correct

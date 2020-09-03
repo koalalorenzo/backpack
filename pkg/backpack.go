@@ -1,6 +1,6 @@
-package bundle
+package pkg
 
-type Bundle struct {
+type Backpack struct {
 	Name    string `yaml:"name"`
 	Version string `yaml:"version"` // Please use semver
 

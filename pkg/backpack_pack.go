@@ -1,4 +1,4 @@
-package bundle
+package pkg
 
 import (
 	"encoding/base64"
@@ -8,10 +8,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// GetBundleFromDirectory will look in a given path for backpack.yaml and .nomad
-// files to bundle them together.
-func GetBundleFromDirectory(dirPath string) (b *Bundle, err error) {
-	b = &Bundle{}
+// GetBackpackFromDirectory will look in a given path for backpack.yaml and .nomad
+// files to Backpack them together.
+func GetBackpackFromDirectory(dirPath string) (b *Backpack, err error) {
+	b = &Backpack{}
 
 	// get all the files available in the directory
 	files, err := ioutil.ReadDir(dirPath)
