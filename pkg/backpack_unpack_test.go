@@ -34,7 +34,7 @@ func TestBackpackUnpack(t *testing.T) {
 	assert.NoError(t, err)
 	backapckHash := sha256.Sum256(bckpBytes)
 	t.Logf("%x: backpack.yaml", backapckHash)
-	assert.Equal(t, "b8b33cc9147219173f9b8b28ebc4ef467a863a6eb11f053faae4b55f1e6497be", fmt.Sprintf("%x", backapckHash))
+	assert.Equal(t, "e8dd2dc8b1df7092dc47480f6e05f30c4a24e68c8a5f53932e3c0d63d16ecf1a", fmt.Sprintf("%x", backapckHash))
 
 	exampleBytes, err := ioutil.ReadFile(filepath.Join(tempDir, "example.nomad"))
 	assert.NoError(t, err)

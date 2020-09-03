@@ -14,9 +14,9 @@ func TestBackpackWrite(t *testing.T) {
 	}
 
 	b := Backpack{
-		Name:      "hello-world",
-		Version:   "0.1.0",
-		Variables: map[string]interface{}{"datacenter": []string{"dc1", "dc2"}},
+		Name:          "hello-world",
+		Version:       "0.1.0",
+		DefaultValues: map[string]interface{}{"datacenter": []string{"dc1", "dc2"}},
 	}
 
 	err = WriteBackpackToFile(b, tmpFile.Name())

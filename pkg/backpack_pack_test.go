@@ -19,5 +19,5 @@ func TestBackpackPackDirectory(t *testing.T) {
 
 	assert.Equal(t, "redis", b.Name)
 	assert.Equal(t, "0.1.0", b.Version)
-	assert.Equal(t, "[\"dc1\", \"dc2\"]", b.Variables["datacenters"])
+	assert.Equal(t, "[\"dc1\", \"dc2\"]", b.DefaultValues["datacenters"])
 }

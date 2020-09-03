@@ -15,6 +15,11 @@ func mergeValues(ms ...pkg.ValuesType) pkg.ValuesType {
 	return final
 }
 
-func ApplyValues(b *pkg.Backpack, cv pkg.ValuesType) {
+// ApplyValues will gather the Backpack templates, the default values and
+// custom values to generate proper HCL that can be sent to nomad
+func ApplyValues(bpk *pkg.Backpack, cv pkg.ValuesType) map[string][]byte {
+	// Merge Values
+	// final := mergeValues(bpk.DefaultValues, cv)
 
+	return nil
 }
