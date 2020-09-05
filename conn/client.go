@@ -1,4 +1,4 @@
-package straps
+package conn
 
 import (
 	"github.com/hashicorp/nomad/api"
