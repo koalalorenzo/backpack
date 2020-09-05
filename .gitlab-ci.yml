@@ -19,7 +19,7 @@ stages:
 test:
   stage: test
   script:
-    - make clean test build
+    - make clean test
 
 build:binary:
   extends: .buildbase
