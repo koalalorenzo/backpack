@@ -13,7 +13,7 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "backpack",
 		Short: "Package Manager for Hashicorp Nomad",
-		Long: `Backpack allows you to deploy a suite of jobs with a templating system. 	
+		Long: `Backpack allows you to deploy a suite of jobs with a templating system.
 Please read more at https://backpack.qm64.tech/`,
 
 		// Uncomment the following line if your bare application

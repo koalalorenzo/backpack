@@ -19,7 +19,7 @@ var unpackCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run:   UnpackRun,
 	Short: "Opens a Backpack file to explore content",
-	Long: `Explodes the backpack inside a directory. This is useful to edit a 
+	Long: `Explodes the backpack inside a directory. This is useful to edit a
 Backpack, inspecting it or seeing default values.
 
 The Backpack includes:
