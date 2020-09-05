@@ -14,15 +14,15 @@ func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
 	for n, b64f := range b.Templates {
 		// Decode Base64
 		var f []byte
-		f, err = base64.StdEncoding.DecodeString(string(b64f))
-		if err != nil {
-			err = multierror.Append(err, err)
+		f, terr := base64.StdEncoding.DecodeString(string(b64f))
+		if terr != nil {
+			err = multierror.Append(err, terr)
 			continue
 		}
 
-		err = ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
-		if err != nil {
-			err = multierror.Append(err, err)
+		terr = ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
+		if terr != nil {
+			err = multierror.Append(err, terr)
 			continue
 		}
 	}
