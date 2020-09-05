@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"github.com/hashicorp/go-multierror"
 	"gopkg.in/yaml.v2"
 )
 
@@ -15,13 +16,19 @@ func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
 		var f []byte
 		f, err = base64.StdEncoding.DecodeString(string(b64f))
 		if err != nil {
-			return err
+			err = multierror.Append(err, err)
+			continue
 		}
 
 		err = ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
 		if err != nil {
-			return
+			err = multierror.Append(err, err)
+			continue
 		}
+	}
+
+	if err != nil {
+		return err
 	}
 
 	bb, err := yaml.Marshal(b)

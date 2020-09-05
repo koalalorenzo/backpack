@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"github.com/hashicorp/go-multierror"
 	"gopkg.in/yaml.v2"
 )
 
@@ -38,15 +39,20 @@ func GetBackpackFromDirectory(dirPath string) (b *Backpack, err error) {
 
 		templateBytes, terr := ioutil.ReadFile(filepath.Join(dirPath, f.Name()))
 		if terr != nil {
-			return nil, terr
+			err = multierror.Append(err, terr)
+			continue
 		}
-
 		// Encode files in base64
 		b64file := base64.StdEncoding.EncodeToString(templateBytes)
 
 		tempMap[f.Name()] = []byte(b64file)
 	}
-	b.Templates = tempMap
 
+	// Report the multierror
+	if err != nil {
+		return nil, err
+	}
+
+	b.Templates = tempMap
 	return b, nil
 }

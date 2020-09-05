@@ -3,3 +3,4 @@
 *.a
 *.temp
 *secret*
+.DS_Store
