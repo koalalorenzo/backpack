@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"encoding/base64"
 	"io/ioutil"
 	"path/filepath"
 
@@ -11,16 +10,8 @@ import (
 
 // UnpackBackpackInDirectory will write the Backpack's backpack into a directory.
 func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
-	for n, b64f := range b.Templates {
-		// Decode Base64
-		var f []byte
-		f, terr := base64.StdEncoding.DecodeString(string(b64f))
-		if terr != nil {
-			err = multierror.Append(err, terr)
-			continue
-		}
-
-		terr = ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
+	for n, f := range b.Templates {
+		terr := ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
 		if terr != nil {
 			err = multierror.Append(err, terr)
 			continue

@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"encoding/base64"
 	"io/ioutil"
 	"path/filepath"
 
@@ -42,10 +41,7 @@ func GetBackpackFromDirectory(dirPath string) (b *Backpack, err error) {
 			err = multierror.Append(err, terr)
 			continue
 		}
-		// Encode files in base64
-		b64file := base64.StdEncoding.EncodeToString(templateBytes)
-
-		tempMap[f.Name()] = []byte(b64file)
+		tempMap[f.Name()] = templateBytes
 	}
 
 	// Report the multierror
