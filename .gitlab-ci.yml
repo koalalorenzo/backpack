@@ -7,7 +7,7 @@ stages:
 
 .buildbase:
   stage: build
-  needs: 
+  needs:
     - test
   script:
     - make clean
@@ -21,7 +21,7 @@ test:
   script:
     - make clean test
 
-build:binary:
+build:development:
   extends: .buildbase
   artifacts:
     paths:
@@ -30,7 +30,7 @@ build:binary:
   except:
     - master
 
-build:binary:
+build:release:
   extends: .buildbase
   artifacts:
     paths:
