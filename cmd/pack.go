@@ -17,6 +17,7 @@ var packCmd = &cobra.Command{
 	Long: `Generate a Backpack file from a directory containing backpack.yaml and
 the nomad job files written as go templates. Performs the opposite of unpack.
 `,
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd, err := os.Getwd()
 		if err != nil {

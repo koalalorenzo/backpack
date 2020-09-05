@@ -1,12 +1,12 @@
 package pkg
 
-type ValuesType map[string]interface{}
-
 type TemplatesType map[string][]byte
 
+// Backpack is
 type Backpack struct {
-	Name    string `yaml:"name"`
-	Version string `yaml:"version"` // Please use semver
+	Name         string            `yaml:"name"`
+	Version      string            `yaml:"version"` // Please use semver
+	Dependencies map[string]string // URLs for dependencies? TBD
 
 	// Templates are the .nomad files that with DefaultValues to be replaced
 	Templates TemplatesType `yaml:"-"`

@@ -4,3 +4,5 @@
 *.temp
 *secret*
 .DS_Store
+build
+vendor
