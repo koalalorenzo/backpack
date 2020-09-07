@@ -1,0 +1,40 @@
+image: registry.gitlab.com/qm64/packer/toolchain
+
+stages:
+  - test
+  - build
+  - release
+
+.buildbase:
+  stage: build
+  needs:
+    - test
+  script:
+    - make clean
+    - make build -e GOOS=linux -e GOARCH=amd64
+    - make build -e GOOS=linux -e GOARCH=arm
+    - make build -e GOOS=windows -e GOARCH=amd64
+    - make build -e GOOS=darwin -e GOARCH=amd64
+
+test:
+  stage: test
+  script:
+    - make clean test
+
+build:development:
+  extends: .buildbase
+  artifacts:
+    paths:
+    - build
+    expire_in: 1 week
+  except:
+    - master
+
+build:release:
+  extends: .buildbase
+  artifacts:
+    paths:
+    - build
+    expire_in: 6 mos
+  only:
+    - master

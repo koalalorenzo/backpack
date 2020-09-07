@@ -1,0 +1,9 @@
+*.bin
+*.o
+*.a
+*.temp
+*secret*
+.DS_Store
+build
+vendor
+backpack
