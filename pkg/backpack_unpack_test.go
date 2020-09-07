@@ -16,7 +16,7 @@ func TestBackpackUnpack(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
-	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "test_bundle/")
+	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "../test_files/")
 
 	tempDir, err := ioutil.TempDir(os.TempDir(), "backpack-unpack")
 	assert.NoError(t, err)

@@ -12,7 +12,7 @@ func TestBackpackPackDirectory(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
-	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "test_bundle/")
+	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "../test_files/backpack/")
 
 	b, err := GetBackpackFromDirectory(bundleTestDirPath)
 	assert.NoError(t, err)

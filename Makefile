@@ -16,6 +16,7 @@ GO_BUILD_OUT_FILE ?= build/backpack
 clean:
 	rm -rf vendor
 	rm -rf out
+	rm -rf backpack
 .PHONY: clean
 
 vendor:
