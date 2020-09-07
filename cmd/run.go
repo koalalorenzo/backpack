@@ -2,35 +2,69 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"text/tabwriter"
 
 	"github.com/spf13/cobra"
+	"gitlab.com/qm64/backpack/conn"
+	"gitlab.com/qm64/backpack/pkg"
+	"gitlab.com/qm64/backpack/templating"
 )
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
-	Use:   "run",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "run [path]",
+	Short: "Starts the jobs of a backpack",
+	Long:  `It allows to run different jobs specified in the backpack`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("run called")
+		b, err := pkg.GetBackpackFromFile(args[0])
+		if err != nil {
+			log.Fatalf("Error parsing the backpack: %s", err)
+		}
+
+		client, err := conn.NewClinet()
+		if err != nil {
+			log.Fatalf("Error creating new Nomad Client: %s", err)
+		}
+
+		vfPath := cmd.Flag("values").Value.String()
+		values, err := pkg.ValuesFromFile(vfPath)
+		if err != nil {
+			log.Fatalf("Error reading the value file: %s", err)
+		}
+
+		// Populate the template into job files 💪
+		bts, err := templating.BuildHCL(&b, values)
+		if err != nil {
+			log.Fatalf("Error building the HCL files: %s", err)
+		}
+
+		// For each job file run it! 🚀
+		// then store the job ID in the backpack to show it afterwards.
+		jIDs := map[string]string{}
+		for name, hcl := range bts {
+			jID, err := client.Run(string(hcl))
+			if err != nil {
+				log.Fatalf("Error running %s: %s", name, err)
+			}
+			jIDs[name] = jID
+		}
+		b.JobsEvalIDs = jIDs
+
+		// Prepare a table for the output
+		w := tabwriter.NewWriter(os.Stdout, 3, 0, 2, ' ', 0)
+		fmt.Fprintln(w, "File Name\tJob ID\t")
+		for n, jID := range b.JobsEvalIDs {
+			fmt.Fprintf(w, "%s\t%s\t\n", n, jID)
+		}
+		w.Flush()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(runCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// runCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// runCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	runCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
+	runCmd.MarkFlagRequired("values")
 }

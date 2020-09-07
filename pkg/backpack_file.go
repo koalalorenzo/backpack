@@ -27,6 +27,8 @@ func GetBackpackFromFile(path string) (b Backpack, err error) {
 		}
 		b.Templates[n] = f
 	}
+
+	b.SortTemplates()
 	return
 }
 

@@ -15,10 +15,6 @@ var (
 		Short: "Package Manager for Hashicorp Nomad",
 		Long: `Backpack allows you to deploy a suite of jobs with a templating system.
 Please read more at https://backpack.qm64.tech/`,
-
-		// Uncomment the following line if your bare application
-		// has an action associated with it:
-		//	Run: func(cmd *cobra.Command, args []string) { },
 	}
 )
 

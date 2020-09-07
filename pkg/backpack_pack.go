@@ -50,5 +50,7 @@ func GetBackpackFromDirectory(dirPath string) (b *Backpack, err error) {
 	}
 
 	b.Templates = tempMap
+	b.SortTemplates()
+
 	return b, nil
 }
