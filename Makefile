@@ -15,7 +15,7 @@ GO_BUILD_OUT_FILE ?= build/backpack
 
 clean:
 	rm -rf vendor
-	rm -rf out
+	rm -rf build
 	rm -rf backpack
 .PHONY: clean
 
@@ -25,6 +25,10 @@ vendor:
 build: vendor
 	go build -a -o ${GO_BUILD_OUT_FILE} main.go
 .PHONY: build
+
+install:
+	go install -i
+.PHONY: install
 
 test:
 	go test -v ./...
