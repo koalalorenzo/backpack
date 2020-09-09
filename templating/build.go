@@ -5,9 +5,11 @@ import (
 	"io/ioutil"
 	"text/template"
 
+	"github.com/Masterminds/sprig"
 	"github.com/hashicorp/go-multierror"
-	"gitlab.com/qm64/backpack/pkg"
 	"gopkg.in/yaml.v2"
+
+	"gitlab.com/qm64/backpack/pkg"
 )
 
 // BuildHCL will gather the Backpack templates, the default values and
@@ -25,7 +27,7 @@ func BuildHCL(bpk *pkg.Backpack, cv pkg.ValuesType) (o map[string][]byte, err er
 	o = map[string][]byte{}
 
 	for n, ot := range bpk.Templates {
-		t, terr := template.New(n).Parse(string(ot))
+		t, terr := template.New(n).Funcs(sprig.TxtFuncMap()).Parse(string(ot))
 		if terr != nil {
 			err = multierror.Append(err, terr)
 			continue
