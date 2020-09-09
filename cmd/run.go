@@ -15,22 +15,39 @@ import (
 // runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run [path]",
-	Short: "Starts the jobs of a backpack",
-	Long:  `It allows to run different jobs specified in the backpack`,
 	Args:  cobra.ExactArgs(1),
-	Run:   runRun,
+	Short: "Starts the jobs of a backpack",
+	Long: `It allows to run different jobs specified in the backpack.
+It accepts one argument that is the path of the file, but if the option 
+--unpacked (or -u is) passed it consider the first argument as the path of an
+unpacked backpack directory that will be used instead of a file.
+`,
+	Run: runRun,
 }
 
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
+	runCmd.Flags().BoolP("unpacked", "u", false, "instead of reading from a file, read from a directory")
 }
 
 // This is the actual command..
 func runRun(cmd *cobra.Command, args []string) {
-	b, err := pkg.GetBackpackFromFile(args[0])
-	if err != nil {
-		log.Fatalf("Error parsing the backpack: %s", err)
+	b := pkg.Backpack{}
+	var err error
+
+	readFromDir := cmd.Flag("unpacked").Value.String()
+	if readFromDir == "false" {
+		b, err = pkg.GetBackpackFromFile(args[0])
+		if err != nil {
+			log.Fatalf("Error parsing the backpack: %s", err)
+		}
+	} else {
+		d, err := pkg.GetBackpackFromDirectory(args[0])
+		b = *d
+		if err != nil {
+			log.Fatalf("Error parsing the unpacked backpack: %s", err)
+		}
 	}
 
 	client, err := conn.NewClinet()
