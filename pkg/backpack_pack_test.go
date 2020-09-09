@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"gopkg.in/yaml.v2"
 )
 
 func TestBackpackPackDirectory(t *testing.T) {
@@ -19,5 +20,11 @@ func TestBackpackPackDirectory(t *testing.T) {
 
 	assert.Equal(t, "redis", b.Name)
 	assert.Equal(t, "0.1.0", b.Version)
-	assert.Equal(t, "[\"dc1\", \"dc2\"]", b.DefaultValues["datacenters"])
+
+	values := map[string]interface{}{}
+	err = yaml.Unmarshal(b.DefaultValues, values)
+	assert.NoError(t, err)
+
+	assert.Equal(t, `["dc1", "dc2"]`, values["datacenters"])
+	// WriteBackpackToFile(*b, filepath.Join(bundlePackageGoDir, "../test_files/new_pack.backpack"))
 }

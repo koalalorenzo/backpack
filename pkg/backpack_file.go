@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"io/ioutil"
 
-	"github.com/hashicorp/go-multierror"
 	"github.com/vmihailenco/msgpack"
 )
 
@@ -16,28 +15,38 @@ func GetBackpackFromFile(path string) (b Backpack, err error) {
 	}
 
 	err = msgpack.Unmarshal(bb, &b)
-
-	// Decode Templates to Base64
-	for n, b64f := range b.Templates {
-		var f []byte
-		f, terr := base64.StdEncoding.DecodeString(string(b64f))
-		if terr != nil {
-			err = multierror.Append(err, terr)
-			continue
-		}
-		b.Templates[n] = f
+	if err != nil {
+		return Backpack{}, err
 	}
 
+	// Decode Templates to Base64
+	b.Templates, err = decodeB64FilesMap(b.Templates)
+	if err != nil {
+		return Backpack{}, err
+	}
 	b.SortTemplates()
+
+	// Decode Documentation
+	b.Documentation, err = decodeB64FilesMap(b.Documentation)
+	if err != nil {
+		return Backpack{}, err
+	}
+
+	// Decode Default Values
+	b.DefaultValues, err = base64.StdEncoding.DecodeString(string(b.DefaultValues))
+	if err != nil {
+		return Backpack{}, err
+	}
+
 	return
 }
 
 // WriteBackpackToFile will write a Backpack to file
 func WriteBackpackToFile(b Backpack, path string) (err error) {
-	// Encode Templates to Base64
-	for n, f := range b.Templates {
-		b.Templates[n] = []byte(base64.StdEncoding.EncodeToString(f))
-	}
+	// Encode to base64
+	b.Templates, _ = encodeB64FilesMap(b.Templates)
+	b.Documentation, _ = encodeB64FilesMap(b.Documentation)
+	b.DefaultValues = []byte(base64.StdEncoding.EncodeToString(b.DefaultValues))
 
 	bb, err := msgpack.Marshal(&b)
 	if err != nil {

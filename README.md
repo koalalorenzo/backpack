@@ -44,12 +44,18 @@ export NOMAD_TOKEN=""
 backpack run ./hello-world-0.1.0.backpack -v ./values.yaml
 ```
 
+**Get Help** and learn more for each command
+```shell
+backpack help
+```
+
 ## Read More
 
 * [How to build Backpack binaries from source code](docs/build.md)
 * [How to install Backpack from source code](docs/build.md#installing)
-* [Commands available](docs/cli.md)
-  * [create](docs/cli/create.md)
-  * [pack](docs/cli/pack.md)
-  * [unpack](docs/cli/unpack.md)
-  * [run](docs/cli/run.md)
+* [How to use backpack with Helm](docs/usage.md)
+
+# Copyright and License
+
+Copyright © 2020 Lorenzo Setale https://setale.me
+The full license is available in the file [LICENSE](LICENSE)

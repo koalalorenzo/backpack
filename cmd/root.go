@@ -14,7 +14,12 @@ var (
 		Use:   "backpack",
 		Short: "Package Manager for Hashicorp Nomad",
 		Long: `Backpack allows you to deploy a suite of jobs with a templating system.
-Please read more at https://backpack.qm64.tech/`,
+Please read more at https://backpack.qm64.tech/
+
+Copyright © 2020 Lorenzo Setale https://setale.me
+This program and its source code is licensed under the terms of the
+GNU Lesser General Public License v3 (LGPLv3). Please refer to the source code 
+for the full license text`,
 	}
 )
 

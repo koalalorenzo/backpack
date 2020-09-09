@@ -15,7 +15,7 @@ func TestBuildHCL(t *testing.T) {
 			"job1.nomad": []byte("{{ .variable }}-{{ .default }}"),
 			"job2.nomad": []byte("{{ .default }}-{{ .variable }}"),
 		},
-		DefaultValues: map[string]interface{}{"variable": "old", "default": 1},
+		DefaultValues: []byte(`{ "variable": "old", "default" : 1 }`),
 	}
 
 	// Defining new values to apply

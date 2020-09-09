@@ -10,6 +10,7 @@ import (
 
 // UnpackBackpackInDirectory will write the Backpack's backpack into a directory.
 func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
+	// Unpack Templates
 	for n, f := range b.Templates {
 		terr := ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
 		if terr != nil {
@@ -18,6 +19,21 @@ func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
 		}
 	}
 
+	// Unpack Documentation
+	for n, f := range b.Documentation {
+		terr := ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)
+		if terr != nil {
+			err = multierror.Append(err, terr)
+			continue
+		}
+	}
+
+	if err != nil {
+		return err
+	}
+
+	// Unpack Default Values
+	err = ioutil.WriteFile(filepath.Join(dirPath, "values.yaml"), b.DefaultValues, 0744)
 	if err != nil {
 		return err
 	}

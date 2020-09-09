@@ -1,7 +1,2 @@
 name: redis
-version: 0.1.0
-values:
-  datacenters: "[\"dc1\", \"dc2\"]"
-  something_crazy: 
-    - name: hello
-      value: world
+version: 0.1.0  

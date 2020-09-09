@@ -1,4 +1,4 @@
-image: registry.gitlab.com/qm64/packer/toolchain
+image: golang:1.15
 
 stages:
   - test
@@ -13,8 +13,8 @@ stages:
     - make clean
     - make build -e GOOS=linux -e GOARCH=amd64
     - make build -e GOOS=linux -e GOARCH=arm
-    - make build -e GOOS=windows -e GOARCH=amd64
     - make build -e GOOS=darwin -e GOARCH=amd64
+    - make build -e GOOS=windows -e GOARCH=amd64
 
 test:
   stage: test
