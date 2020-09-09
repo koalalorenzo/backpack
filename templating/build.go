@@ -7,13 +7,21 @@ import (
 
 	"github.com/hashicorp/go-multierror"
 	"gitlab.com/qm64/backpack/pkg"
+	"gopkg.in/yaml.v2"
 )
 
 // BuildHCL will gather the Backpack templates, the default values and
 // custom values to generate proper HCL that can be sent to nomad
 func BuildHCL(bpk *pkg.Backpack, cv pkg.ValuesType) (o map[string][]byte, err error) {
+	// Get the default map properly from the raw bytes that contains comments
+	dvm := map[string]interface{}{}
+	err = yaml.Unmarshal(bpk.DefaultValues, dvm)
+	if err != nil {
+		return nil, err
+	}
+
 	// Merge Values
-	values := mergeValues(bpk.DefaultValues, cv)
+	values := mergeValues(dvm, cv)
 	o = map[string][]byte{}
 
 	for n, ot := range bpk.Templates {
