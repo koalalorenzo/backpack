@@ -14,7 +14,6 @@ stages:
     - make build -e GOOS=linux -e GOARCH=amd64
     - make build -e GOOS=linux -e GOARCH=arm
     - make build -e GOOS=darwin -e GOARCH=amd64
-    - make build -e GOOS=darwin -e GOARCH=arm64
     - make build -e GOOS=windows -e GOARCH=amd64
 
 test:
