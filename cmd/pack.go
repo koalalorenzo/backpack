@@ -15,7 +15,15 @@ var packCmd = &cobra.Command{
 	Use:   "pack [path]",
 	Short: "Build a Backpack file from a directory/template",
 	Long: `Generate a Backpack file from a directory containing backpack.yaml and
-the nomad job files written as go templates. Performs the opposite of unpack.
+the nomad job files written as go templates
+
+The directory should have these files:
+- backpack.yaml (containing metadata)
+- values.yaml (containing the default values for the templates)
+- *.nomad (representing the various go templates of Nomad Jobs)
+- *.md (useful documentation)
+
+This command performs the opposite of "unpack" command
 `,
 	Args: cobra.ExactArgs(1),
 	Run:  packRun,

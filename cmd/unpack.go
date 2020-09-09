@@ -20,11 +20,13 @@ var unpackCmd = &cobra.Command{
 	Run:   unpackRun,
 	Short: "Opens a Backpack file to explore content",
 	Long: `Explodes the backpack inside a directory. This is useful to edit a
-Backpack, inspecting it or seeing default values.
+Backpack, inspecting it or seeing default values
+
+This command performs the opposite of "pack" command
 
 This command accepts one argument that is backpack to extract the data
 from. Unless specified via -d or --dir, the files will be extracted in a new
-directory in the CWD, with the name and version of the backpack. 
+directory in the CWD, with the name and version of the backpack
 
 The Backpack includes:
 - backpack.yaml (containing metadata)
@@ -36,15 +38,6 @@ The Backpack includes:
 
 func init() {
 	rootCmd.AddCommand(unpackCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// unpackCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
 	unpackCmd.Flags().StringP("dir", "d", "", "specifies the directory to write into")
 	unpackCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
 }

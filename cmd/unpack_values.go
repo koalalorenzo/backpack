@@ -17,7 +17,7 @@ var valuesCmd = &cobra.Command{
 	Short: "Extracts the default values of a backpack into a yaml files",
 	Long: `Extracts the default values of a backpack, specified as first argument,
 into a yaml file. If no file path is specified in the option -f or --file a new 
-file values.yaml will be created.
+file values.yaml will be created
 `,
 	Run: unpackValuesRun,
 }

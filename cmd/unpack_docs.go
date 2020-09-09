@@ -18,11 +18,11 @@ var docsCmd = &cobra.Command{
 	Short: "Unpack the documentation in a new directory",
 	Long: `Each backpack comes with its own documentation. Use this command to 
 extract the documentation for a specific backpack file. This will make sure
-to have the right documentation for the right backpack file.
+to have the right documentation for the right backpack file
 
 This command accepts one argument that is backpack to extract the documentation
 from. Unless specified via -d or --dir, the files will be extracted in a new
-directory in the CWD, with the name and version of the backpack.
+directory in the CWD, with the name and version of the backpack
 `,
 	Run: unpackDocsRun,
 }
