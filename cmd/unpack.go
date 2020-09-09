@@ -43,14 +43,14 @@ func init() {
 }
 
 func unpackRun(cmd *cobra.Command, args []string) {
-	cwd, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	b, err := pkg.GetBackpackFromFile(args[0])
 	if err != nil {
 		log.Fatalf("Error parsing the backpack: %s", err)
+	}
+
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// Checks if a custom directory has been specified, otherwise unpack in
