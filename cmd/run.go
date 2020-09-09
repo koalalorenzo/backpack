@@ -75,7 +75,7 @@ func runRun(cmd *cobra.Command, args []string) {
 	if debugFlag == "true" {
 		for name, hcl := range bts {
 			log.Printf("File: %s\n", name)
-			fmt.Print(string(hcl))
+			fmt.Println(string(hcl))
 		}
 		return
 	}
