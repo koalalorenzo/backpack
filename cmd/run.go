@@ -29,6 +29,7 @@ func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
 	runCmd.Flags().BoolP("unpacked", "u", false, "instead of reading from a file, read from a directory")
+	runCmd.Flags().Bool("debug", false, "prints the jobs on stdout instead of sending them to nomad")
 }
 
 // This is the actual command..
@@ -68,6 +69,15 @@ func runRun(cmd *cobra.Command, args []string) {
 	bts, err := templating.BuildHCL(&b, values)
 	if err != nil {
 		log.Fatalf("Error building the HCL files: %s", err)
+	}
+
+	debugFlag := cmd.Flag("debug").Value.String()
+	if debugFlag == "true" {
+		for name, hcl := range bts {
+			log.Printf("File: %s\n", name)
+			fmt.Print(string(hcl))
+		}
+		return
 	}
 
 	// For each job file run it! 🚀
