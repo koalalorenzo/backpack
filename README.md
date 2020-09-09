@@ -53,3 +53,8 @@ backpack run ./hello-world-0.1.0.backpack -v ./values.yaml
   * [pack](docs/cli/pack.md)
   * [unpack](docs/cli/unpack.md)
   * [run](docs/cli/run.md)
+
+# Copyright and License
+
+Copyright © 2020 Lorenzo Setale
+The full license is available in the file [LICENSE](LICENSE)
