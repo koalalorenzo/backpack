@@ -1,6 +1,6 @@
 # Nomad's Backpack 🎒
 
-[Backpack](https://backpack.qm64.io) 🎒 is a packaging system for
+[Backpack](https://backpack.qm64.tech) 🎒 is a packaging system for
 [Hashicorp Nomad](https://www.nomadproject.io) that allows to:
 
 * Helps you define and install complex jobs configuration
