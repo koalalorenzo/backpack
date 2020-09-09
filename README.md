@@ -1,6 +1,6 @@
-# Nomad's Backpack
+# Nomad's Backpack 🎒
 
-[Backpack](https://backpack.qm64.io) is a packaging system for
+[Backpack](https://backpack.qm64.io) 🎒 is a packaging system for
 [Hashicorp Nomad](https://www.nomadproject.io) that allows to:
 
 * Helps you define and install complex jobs configuration
@@ -24,30 +24,32 @@ make install
 **Create** your first backpack, by creating the directory structure:
 
 ```shell
-backpack create hello-world
+backpack create nginx
 ```
 
 **Pack** all the files into one single backpack:
 ```shell
-backpack pack ./hello-world
+backpack pack ./nginx-0.1.0/
 ```
 
 **Customize** a pack default values to configure, enable, adjust the jobs:
 ```shell
-backpack unpack values -f ./values.yaml
+backpack unpack values ./nginx-0.1.0.backpack -f ./values.yaml
 ```
 
 **Run** your Nomad Jobs with my custom values:
 ```shell
 export NOMAD_ADDR="http://127.0.0.1:4646"
 export NOMAD_TOKEN=""
-backpack run ./hello-world-0.1.0.backpack -v ./values.yaml
+backpack run ./nginx-0.1.0.backpack -v ./values.yaml
 ```
 
 **Get Help** and learn more for each command
 ```shell
 backpack help
 ```
+
+Happy Backpacking! 🎒😀 
 
 ## Read More
 
