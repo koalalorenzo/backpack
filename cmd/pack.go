@@ -18,32 +18,33 @@ var packCmd = &cobra.Command{
 the nomad job files written as go templates. Performs the opposite of unpack.
 `,
 	Args: cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		cwd, err := os.Getwd()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		b, err := pkg.GetBackpackFromDirectory(args[0])
-		if err != nil {
-			log.Fatalf("Error generating the backpack from the directory: %s", err)
-		}
-		writeTo := filepath.Join(cwd, fmt.Sprintf("%s-%s.backpack", b.Name, b.Version))
-
-		fileFlag := cmd.Flag("file").Value.String()
-		if fileFlag != "" {
-			writeTo = fileFlag
-		}
-
-		err = pkg.WriteBackpackToFile(*b, writeTo)
-		if err != nil {
-			log.Fatalf("Error writing to file: %s", err)
-		}
-	},
+	Run:  packRun,
 }
 
 func init() {
 	rootCmd.AddCommand(packCmd)
+	packCmd.Flags().StringP("file", "f", "", "path of the file to create and write into")
+}
 
-	packCmd.Flags().StringP("file", "f", "", "path of the file to write into")
+func packRun(cmd *cobra.Command, args []string) {
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	b, err := pkg.GetBackpackFromDirectory(args[0])
+	if err != nil {
+		log.Fatalf("Error generating the backpack from the directory: %s", err)
+	}
+	writeTo := filepath.Join(cwd, fmt.Sprintf("%s-%s.backpack", b.Name, b.Version))
+
+	fileFlag := cmd.Flag("file").Value.String()
+	if fileFlag != "" {
+		writeTo = fileFlag
+	}
+
+	err = pkg.WriteBackpackToFile(*b, writeTo)
+	if err != nil {
+		log.Fatalf("Error writing to file: %s", err)
+	}
 }
