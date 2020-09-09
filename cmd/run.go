@@ -24,7 +24,6 @@ var runCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
-	runCmd.MarkFlagRequired("values")
 }
 
 // This is the actual command..
@@ -40,9 +39,12 @@ func runRun(cmd *cobra.Command, args []string) {
 	}
 
 	vfPath := cmd.Flag("values").Value.String()
-	values, err := pkg.ValuesFromFile(vfPath)
-	if err != nil {
-		log.Fatalf("Error reading the value file: %s", err)
+	values := pkg.ValuesType{}
+	if vfPath != "" {
+		values, err = pkg.ValuesFromFile(vfPath)
+		if err != nil {
+			log.Fatalf("Error reading the value file: %s", err)
+		}
 	}
 
 	// Populate the template into job files 💪
