@@ -17,14 +17,20 @@ import (
 var unpackCmd = &cobra.Command{
 	Use:   "unpack [file.backpack]",
 	Args:  cobra.ExactArgs(1),
-	Run:   UnpackRun,
+	Run:   unpackRun,
 	Short: "Opens a Backpack file to explore content",
 	Long: `Explodes the backpack inside a directory. This is useful to edit a
 Backpack, inspecting it or seeing default values.
 
+This command accepts one argument that is backpack to extract the data
+from. Unless specified via -d or --dir, the files will be extracted in a new
+directory in the CWD, with the name and version of the backpack. 
+
 The Backpack includes:
-- backpack.yaml (containing metadata and default values)
+- backpack.yaml (containing metadata)
+- values.yaml (containing the default values for the templates)
 - *.nomad (representing the various go templates of Nomad Jobs)
+- *.md (useful documentation)
 `,
 }
 
@@ -43,7 +49,7 @@ func init() {
 	unpackCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
 }
 
-func UnpackRun(cmd *cobra.Command, args []string) {
+func unpackRun(cmd *cobra.Command, args []string) {
 	cwd, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
