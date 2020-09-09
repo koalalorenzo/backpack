@@ -50,15 +50,18 @@ datacenters:
 
 		Templates: pkg.FilesMapType{
 			"main.nomad": []byte(fmt.Sprintf(`job "%s" {
-	datacenters = [{{range .datacenters}} "{{ . }}", {{else}} "dc1" {{end}}]
+	datacenters = []
 	type = "service"
 
-	task "%s_nginx" {
-		driver = "docker"
-		config {
-			image = "nginx:alpine"
-			ports = ["http", "https"]
+	group "%s_servers" {
+		task "nginx" {
+			driver = "docker"
+			config {
+				image = "nginx:alpine"
+				ports = ["http", "https"]
+			}
 		}
+
 		network {
 			port "http" {
 				static = 80
@@ -67,6 +70,7 @@ datacenters:
 				static = 443
 			}
 		}
+  }
 }`, name, name)),
 		},
 
