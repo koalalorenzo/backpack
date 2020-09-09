@@ -18,7 +18,7 @@ var runCmd = &cobra.Command{
 	Short: "Starts the jobs of a backpack",
 	Long:  `It allows to run different jobs specified in the backpack`,
 	Args:  cobra.ExactArgs(1),
-	Run: runRun,
+	Run:   runRun,
 }
 
 func init() {
@@ -70,4 +70,4 @@ func runRun(cmd *cobra.Command, args []string) {
 		fmt.Fprintf(w, "%s\t%s\t\n", n, jID)
 	}
 	w.Flush()
-},
+}
