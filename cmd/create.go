@@ -44,13 +44,20 @@ func createRun(cmd *cobra.Command, args []string) {
 # It is strongly suggested to use inline documentation for quick explanations
 # otherwise the *.md files can be used for longer documentation.
 datacenters:
-	- dc1
-	- dc2
+ - dc1
+nginx:
+  # HTTP is enabled by default
+  http:
+    port: 80
+  # HTTPS is disabled by default
+  https:
+    enable: false
+    port: 443
 `),
 
 		Templates: pkg.FilesMapType{
 			"main.nomad": []byte(fmt.Sprintf(`job "%s" {
-	datacenters = []
+	datacenters = {{ toJson .datacenters }}
 	type = "service"
 
 	group "%s_servers" {
@@ -58,17 +65,19 @@ datacenters:
 			driver = "docker"
 			config {
 				image = "nginx:alpine"
-				ports = ["http", "https"]
+				ports = ["http"{{ if .nginx.https.enable }}, "https" {{ end }}]
 			}
 		}
 
 		network {
 			port "http" {
-				static = 80
+				static = {{ .nginx.http.port }}
 			}
+			{{- if .nginx.https.enable }} 
 			port "https" {
-				static = 443
+				static = {{ .nginx.https.port }}
 			}
+			{{- end }}
 		}
   }
 }`, name, name)),
@@ -109,11 +118,12 @@ Have fun! 😄
 
 	fmt.Printf(`Congratulations! Feel free to modify the files written in %s
 
-Your next step will be, creating a backpack file:
-  $ backpack pack %s
+You can check that your templates are correct by running
+  $ backpack run %s --unpacked --debug
 
-You can then run the backpack in your nomad local testing:
-  $ backpack run %s.backpack 
+When you feel ready to share it with your colleagues and friends you can pack it
+by running:
+  $ backpack pack %s
 
 Happy packing and sharing!
 `, directory, showPath, showPath)
