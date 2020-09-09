@@ -1,0 +1,6 @@
+# Specify the datacenters
+datacenters: "[\"dc1\", \"dc2\"]"
+# Yes, we can have inline docs now
+something_crazy: 
+  - name: hello
+    value: world
