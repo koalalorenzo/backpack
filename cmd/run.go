@@ -18,7 +18,7 @@ var runCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Short: "Starts the jobs of a backpack",
 	Long: `It allows to run different jobs specified in the backpack.
-It accepts one argument that is the path of the file, but if the option 
+It accepts one argument that is the path or URL of the file, but if the option 
 --unpacked (or -u is) passed it consider the first argument as the path of an
 unpacked backpack directory that will be used instead of a file.
 `,

@@ -21,9 +21,9 @@ Backpack, inspecting it or seeing default values
 
 This command performs the opposite of "pack" command
 
-This command accepts one argument that is backpack to extract the data
-from. Unless specified via -d or --dir, the files will be extracted in a new
-directory in the CWD, with the name and version of the backpack
+This command accepts one argument that is backpack to extract the data from 
+(path or URL). Unless specified via -d or --dir, the files will be extracted in 
+a new directory in the CWD, with the name and version of the backpack
 
 The Backpack includes:
 - backpack.yaml (containing metadata)
