@@ -28,7 +28,10 @@ func init() {
 }
 
 func unpackValuesRun(cmd *cobra.Command, args []string) {
-	b, err := pkg.GetBackpackFromFile(args[0])
+	// get a file from URL or Path
+	p := getAUsablePathOfFile(args[0])
+
+	b, err := pkg.GetBackpackFromFile(p)
 	if err != nil {
 		log.Fatalf("Error parsing the backpack: %s", err)
 	}

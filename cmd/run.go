@@ -39,11 +39,15 @@ func runRun(cmd *cobra.Command, args []string) {
 
 	readFromDir := cmd.Flag("unpacked").Value.String()
 	if readFromDir == "false" {
-		b, err = pkg.GetBackpackFromFile(args[0])
+		// get a file from URL or Path
+		p := getAUsablePathOfFile(args[0])
+
+		b, err = pkg.GetBackpackFromFile(p)
 		if err != nil {
 			log.Fatalf("Error parsing the backpack: %s", err)
 		}
 	} else {
+		// If we have to read from directory instead args[0] is a path
 		d, err := pkg.GetBackpackFromDirectory(args[0])
 		b = *d
 		if err != nil {
