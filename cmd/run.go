@@ -18,7 +18,7 @@ var runCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Short: "Starts the jobs of a backpack",
 	Long: `It allows to run different jobs specified in the backpack.
-It accepts one argument that is the path of the file, but if the option 
+It accepts one argument that is the path or URL of the file, but if the option 
 --unpacked (or -u is) passed it consider the first argument as the path of an
 unpacked backpack directory that will be used instead of a file.
 `,
@@ -39,11 +39,15 @@ func runRun(cmd *cobra.Command, args []string) {
 
 	readFromDir := cmd.Flag("unpacked").Value.String()
 	if readFromDir == "false" {
-		b, err = pkg.GetBackpackFromFile(args[0])
+		// get a file from URL or Path
+		p := getAUsablePathOfFile(args[0])
+
+		b, err = pkg.GetBackpackFromFile(p)
 		if err != nil {
 			log.Fatalf("Error parsing the backpack: %s", err)
 		}
 	} else {
+		// If we have to read from directory instead args[0] is a path
 		d, err := pkg.GetBackpackFromDirectory(args[0])
 		b = *d
 		if err != nil {

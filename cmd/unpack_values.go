@@ -15,9 +15,10 @@ var valuesCmd = &cobra.Command{
 	Use:   "values [path]",
 	Args:  cobra.ExactArgs(1),
 	Short: "Extracts the default values of a backpack into a yaml files",
-	Long: `Extracts the default values of a backpack, specified as first argument,
-into a yaml file. If no file path is specified in the option -f or --file a new 
-file values.yaml will be created
+	Long: `Extracts the default values of a backpack (specified as first argument
+as either an existing path or URL) into a yaml file. If no file path is 
+specified in the option -f or --file a new file called values.yaml will be 
+created
 `,
 	Run: unpackValuesRun,
 }
@@ -28,7 +29,10 @@ func init() {
 }
 
 func unpackValuesRun(cmd *cobra.Command, args []string) {
-	b, err := pkg.GetBackpackFromFile(args[0])
+	// get a file from URL or Path
+	p := getAUsablePathOfFile(args[0])
+
+	b, err := pkg.GetBackpackFromFile(p)
 	if err != nil {
 		log.Fatalf("Error parsing the backpack: %s", err)
 	}
