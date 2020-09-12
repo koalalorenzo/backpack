@@ -5,6 +5,12 @@ stages:
   - build
   - release
 
+.pages:
+  stage: release  
+  script:
+    - make install
+    - make -C store all publish
+  
 .buildbase:
   stage: build
   needs:
@@ -39,12 +45,20 @@ build:release:
   only:
     - master
 
-pages:
-  extends: .buildbase
-  script:
-  - make install
-  - make -C store all publish
+pages:test:
+  extends: .pages
   artifacts:
     paths:
     - public
     expire_in: 1 week
+  except:
+    - master
+  
+pages:
+  extends: .pages
+  artifacts:
+    paths:
+    - public
+    expire_in: 6 mos
+  only:
+    - master
