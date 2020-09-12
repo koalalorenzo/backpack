@@ -1,6 +1,6 @@
-# How to deploy FabioLB
+# How to deploy Redis
 
-This backpack allows to deploy [FabioLB](http://fabiolb.net/).
+This backpack allows to deploy [Redis](http://redis.io/).
 Please check the values inline documentation for more information
 
 If you see something missing, feel free to open an Issue or to submit a 
