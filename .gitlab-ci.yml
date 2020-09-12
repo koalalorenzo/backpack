@@ -38,3 +38,13 @@ build:release:
     expire_in: 6 mos
   only:
     - master
+
+pages:
+  extends: .buildbase
+  script:
+  - make install
+  - make -C store all publish
+  artifacts:
+    paths:
+    - public
+    expire_in: 1 week
