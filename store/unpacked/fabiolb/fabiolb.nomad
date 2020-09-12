@@ -37,7 +37,7 @@ job {{ quote .job_name }} {
         {{- if .docker.network_mode }}
         network_mode = {{ quote .docker.network_mode }}
         {{- end }}
-        ports = ["proxy"{{ if .conf.ui.enable }}, "ui" {{ end }}]
+        ports = ["proxy"{{ if .services.ui.enable }}, "ui" {{ end }}]
       }
       
       {{ else }}
@@ -58,7 +58,7 @@ job {{ quote .job_name }} {
 
       env {
         FABIO_PROXY_ADDR = ":${NOMAD_PORT_proxy}"
-        {{- if .conf.ui.enable }}
+        {{- if .services.ui.enable }}
         FABIO_UI_ADDR = ":${NOMAD_PORT_ui}"
         {{- end }}
       }
@@ -66,14 +66,14 @@ job {{ quote .job_name }} {
 
     network {
       port "proxy" {
-        {{- if .conf.proxy.port }}
-        static = {{ .conf.proxy.port }}
+        {{- if .services.proxy.port }}
+        static = {{ .services.proxy.port }}
         {{- end }}
       }
-      {{- if .conf.ui.enable }} 
+      {{- if .services.ui.enable }} 
       port "ui" {
-        {{- if .conf.ui.port }} 
-        static = {{ .conf.ui.port }}
+        {{- if .services.ui.port }} 
+        static = {{ .services.ui.port }}
         {{- end }}
       }
       {{- end }}
