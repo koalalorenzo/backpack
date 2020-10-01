@@ -7,6 +7,6 @@ all: $(PACKAGES)
 .PHONY: all
 
 publish:
-	mkdir -p ../public/store/
-	mv *.backpack ../public/store/
+	mkdir -p ../../public/examples/
+	mv *.backpack ../../public/examples/
 .PHONY: publish

@@ -8,8 +8,8 @@ stages:
 .pages:
   stage: release  
   script:
-    - make install
-    - make -C store all publish
+    - make vendor install
+    - make -C docs/examples all publish
   
 .buildbase:
   stage: build

@@ -44,7 +44,7 @@ binaries.
 
 ```shell
 cd backpack
-make clean build
+make
 ```
 
 The binary will be available in `build/backpack`
