@@ -11,7 +11,7 @@ endif
 
 GO_BUILD_OUT_FILE ?= build/backpack
 
-
+.DEFAULT_GOAL := build
 
 clean:
 	rm -rf vendor

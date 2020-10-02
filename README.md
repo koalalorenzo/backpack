@@ -13,9 +13,12 @@ very different than Helm, as Kubernetes is way more than a scheduler.
 Read more [here](https://www.nomadproject.io/intro/vs/kubernetes.html) about
 the differences between k8s and nomad
 
+Backpack is currently tested against Nomad version 0.12.5
+
 ## TL;DR: Install
 
 ```shell
+make
 make install
 ```
 

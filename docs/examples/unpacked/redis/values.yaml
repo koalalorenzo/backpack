@@ -1,0 +1,45 @@
+datacenters:
+  - dc1
+type: service
+region: 
+count: 1
+
+job_name: redis
+
+# Driver will allow you to specify how we are running Redis. At the moment
+# docker is the only option available
+driver: docker
+
+# Configuration used when Docker is set as Driver:
+docker:
+  image: redis
+  tag: "6"
+
+resources: {}
+  # cpu: 500 # 500 MHz
+  # memory: 256 # 256MB
+
+service:
+  enable: false
+  name: "redis"
+  port: #6379 # uncomment to enable static port 
+  tags: []
+    # - "first_tag"
+    # - "second_tag"
+
+persistency:
+  enabled: false 
+  type: ephemeral
+  size: 500
+
+
+# Update strategy can be "rolling", "canary", "blue_green"
+# read more: https://learn.hashicorp.com/tutorials/nomad/job-update-strategies
+# and Nomad docs: https://www.nomadproject.io/docs/job-specification/update 
+update: 
+  enable: true
+  strategy: rolling
+  max_parallel: 1
+  health_check: 
+  min_healthy_time: "15s"
+  healthy_deadline: "1m"
