@@ -49,8 +49,8 @@ backpack run ./nginx-0.1.0.backpack -v ./values.yaml
 
 Unpack, customize or Run a backpack **from an URL**:
 ```shell
-backpack unpack https://gitlab.com/Qm64/backpack/-/raw/master/test_files/redis.backpack
-backpack run https://gitlab.com/Qm64/backpack/-/raw/master/test_files/redis.backpack -f values
+backpack unpack https://backpack.qm64.tech/examples/redis-6.0.0.backpack
+backpack run https://backpack.qm64.tech/examples/redis-6.0.0.backpack -f values
 ```
 
 **Get Help** and learn more for each command

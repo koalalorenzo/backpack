@@ -44,14 +44,26 @@ build:master:
     expire_in: 6 mos
   only:
     - master
+  except:
+    - tags
 
+build:tags:
+  variables:
+    VERSION: $CI_COMMIT_TAG
+  extends: .buildbase
+  artifacts:
+    paths:
+    - build
+  only:
+    - tags
+  
 publish:
   stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   script: 
     - echo "Running a new release"
   dependencies: 
-    - build:master
+    - build:tags
   artifacts:
     paths:
     - build
@@ -60,7 +72,6 @@ publish:
     tag_name: '$CI_COMMIT_TAG'
     ref: '$CI_COMMIT_TAG'
     description: See CHANGELOG.md
-    milestones: ["$CI_COMMIT_TAG"]
   only:
     - tags
 
