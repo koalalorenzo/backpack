@@ -8,9 +8,6 @@ import (
 )
 
 var (
-	// Specify a version and versionTag
-	version    = "unstable"
-	versionTag = "HEAD"
 	// rootCmd represents the base command when called without any subcommands
 	rootCmd = &cobra.Command{
 		Use:   "backpack",
