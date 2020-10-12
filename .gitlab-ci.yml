@@ -45,6 +45,19 @@ build:release:
   only:
     - master
 
+release:
+  needs:
+    - job: build:release
+      artifacts: true
+  artifacts:
+    paths:
+    - build
+  release:
+    tag_name: $CI_COMMIT_TAG
+    description: CHANGELOG.md
+  only:
+    - tag
+
 pages:test:
   extends: .pages
   artifacts:
