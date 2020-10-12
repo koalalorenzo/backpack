@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Ability to know what version of backpack I am running 
+  ([mr9](https://gitlab.com/Qm64/backpack/-/merge_requests/9))
   
 ### Removed
 ### Changed
