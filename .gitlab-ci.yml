@@ -45,7 +45,8 @@ build:release:
   only:
     - master
 
-release:
+release:new:
+  stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   needs:
     - job: build:release
