@@ -100,7 +100,7 @@ Have fun! 😄
 
 	// Checks if a custom directory has been specified, otherwise unpack in
 	// the backpack name.
-	directory := cmd.Flag("dir").Value.String()
+	directory, _ := cmd.Flags().GetString("dir")
 	showPath := directory
 	if directory == "" {
 		showPath = fmt.Sprintf("%s-%s", b.Name, b.Version)

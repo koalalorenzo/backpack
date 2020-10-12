@@ -46,7 +46,7 @@ func packRun(cmd *cobra.Command, args []string) {
 	}
 	writeTo := filepath.Join(cwd, fmt.Sprintf("%s-%s.backpack", b.Name, b.Version))
 
-	fileFlag := cmd.Flag("file").Value.String()
+	fileFlag, _ := cmd.Flags().GetString("file")
 	if fileFlag != "" {
 		writeTo = fileFlag
 	}

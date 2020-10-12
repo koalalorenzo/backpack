@@ -49,7 +49,7 @@ func unpackDocsRun(cmd *cobra.Command, args []string) {
 
 	// Checks if a custom directory has been specified, otherwise unpack in
 	// the backpack name.
-	directory := cmd.Flag("dir").Value.String()
+	directory, _ := cmd.Flags().GetString("dir")
 	if directory == "" {
 		directory = filepath.Join(cwd, fmt.Sprintf("%s-%s", b.Name, b.Version))
 		err = os.Mkdir(directory, 0744)
