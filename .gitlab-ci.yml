@@ -46,6 +46,7 @@ build:release:
     - master
 
 release:
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
   needs:
     - job: build:release
       artifacts: true
@@ -53,10 +54,13 @@ release:
     paths:
     - build
   release:
-    tag_name: $CI_COMMIT_TAG
+    name: 'Release $CI_COMMIT_TAG'
+    tag_name: '$CI_COMMIT_TAG'
+    ref: '$CI_COMMIT_TAG'
     description: CHANGELOG.md
-  only:
-    - tag
+    milestones: ["$CI_COMMIT_TAG"]
+  rules:
+    - if: $CI_COMMIT_TAG
 
 pages:test:
   extends: .pages
