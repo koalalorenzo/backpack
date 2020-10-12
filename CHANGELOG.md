@@ -5,10 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
-- Ability to know what version of backpack I am running 
-  ([mr9](https://gitlab.com/Qm64/backpack/-/merge_requests/9))
-  
+### Added  
 ### Removed
 ### Changed
 ### Fixed
@@ -26,3 +23,5 @@ This is the first release!
 - There are few example backpack files 
   ([#5](https://gitlab.com/Qm64/backpack/-/issues/5))
 - A backpack includes markdown documentation ([#8](https://gitlab.com/Qm64/backpack/-/issues/8))
+- Ability to know what version of backpack I am running 
+  ([mr9](https://gitlab.com/Qm64/backpack/-/merge_requests/9))
