@@ -42,7 +42,7 @@ func unpackValuesRun(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	outputFile := cmd.Flag("file").Value.String()
+	outputFile, _ := cmd.Flags().GetString("file")
 	if outputFile == "" {
 		outputFile = filepath.Join(cwd, "values.yaml")
 	}

@@ -37,8 +37,8 @@ func runRun(cmd *cobra.Command, args []string) {
 	b := pkg.Backpack{}
 	var err error
 
-	readFromDir := cmd.Flag("unpacked").Value.String()
-	if readFromDir == "false" {
+	readFromDir, _ := cmd.Flags().GetBool("unpacked")
+	if readFromDir {
 		// get a file from URL or Path
 		p := getAUsablePathOfFile(args[0])
 
@@ -60,7 +60,7 @@ func runRun(cmd *cobra.Command, args []string) {
 		log.Fatalf("Error creating new Nomad Client: %s", err)
 	}
 
-	vfPath := cmd.Flag("values").Value.String()
+	vfPath, _ := cmd.Flags().GetString("values")
 	values := pkg.ValuesType{}
 	if vfPath != "" {
 		values, err = pkg.ValuesFromFile(vfPath)
@@ -75,8 +75,8 @@ func runRun(cmd *cobra.Command, args []string) {
 		log.Fatalf("Error building the HCL files: %s", err)
 	}
 
-	debugFlag := cmd.Flag("debug").Value.String()
-	if debugFlag == "true" {
+	debugFlag, _ := cmd.Flags().GetBool("debug")
+	if debugFlag {
 		for name, hcl := range bts {
 			log.Printf("File: %s\n", name)
 			fmt.Println(string(hcl))
