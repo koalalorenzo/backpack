@@ -33,7 +33,7 @@ build: vendor
 .PHONY: build
 
 install:
-	go install -i
+	go install -i -ldflags "${BUILD_LDFLAGS}"
 .PHONY: install
 
 test:
