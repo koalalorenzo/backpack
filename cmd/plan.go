@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"text/tabwriter"
@@ -63,23 +64,29 @@ func planRun(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	// Prepare a table for the output in a buffer. This is done so that we can
+	// have a table after outputting the Plans for each job
+	rt, wt, err := os.Pipe()
+	w := tabwriter.NewWriter(wt, 3, 0, 2, ' ', 0)
+	fmt.Fprintln(w, "File Name\tCheck Index\tDiff Type\tPlan warnings")
 	showPlanDiff, _ := cmd.Flags().GetBool("diff")
-	// For each job file run it! 🚀
-	// then store the job ID in the backpack to show it afterwards.
-	pWarnings := map[string]string{}
+
+	// For each job file perform the plan! 🚀
 	for name, hcl := range bts {
-		plan, err := client.Plan(string(hcl), showPlanDiff)
+		p, err := client.Plan(string(hcl), showPlanDiff)
 		if err != nil {
 			log.Fatalf("Error running %s: %s", name, err)
 		}
-		pWarnings[name] = plan.Warnings
+		fmt.Fprintf(w, "%s\t%d\t%s\t%s\t\n", name, p.JobModifyIndex, p.Diff.Type, p.Warnings)
+
 	}
 
-	// Prepare a table for the output
-	w := tabwriter.NewWriter(os.Stdout, 3, 0, 2, ' ', 0)
-	fmt.Fprintln(w, "File Name\tPlan warnings\t")
-	for n, jID := range pWarnings {
-		fmt.Fprintf(w, "%s\t%s\t\n", n, jID)
-	}
+	// Flushes all the table output
 	w.Flush()
+	wt.Close()
+	output, err := ioutil.ReadAll(rt)
+	if err != nil {
+		log.Fatal("Error reading the output table after operation completed:", err)
+	}
+	os.Stdout.Write(output)
 }
