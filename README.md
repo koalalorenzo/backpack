@@ -51,7 +51,7 @@ backpack unpack values ./nginx-0.1.0.backpack -f ./values.yaml
 
 **Plan** and validate (dry-run) the jobs of a package before running:
 ```shell
-backpack plan values ./nginx-0.1.0.backpack -f ./values.yaml
+backpack plan ./nginx-0.1.0.backpack -v ./values.yaml
 ```
 
 **Run** your Nomad Jobs with my custom values:
@@ -59,10 +59,15 @@ backpack plan values ./nginx-0.1.0.backpack -f ./values.yaml
 backpack run ./nginx-0.1.0.backpack -v ./values.yaml
 ```
 
+**Check** the status of the job allocations:
+```shell
+backpack status ./nginx-0.1.0.backpack --all
+```
+
 Unpack, customize or Run a backpack **from an URL**:
 ```shell
 backpack unpack values https://backpack.qm64.tech/examples/redis-6.0.0.backpack -f ./values.yaml
-backpack run https://backpack.qm64.tech/examples/redis-6.0.0.backpack -f values
+backpack run https://backpack.qm64.tech/examples/redis-6.0.0.backpack -v values.yaml
 ```
 
 **Get Help** and learn more for each command
