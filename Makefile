@@ -36,6 +36,11 @@ install:
 	go install -i -ldflags "${BUILD_LDFLAGS}"
 .PHONY: install
 
+# Development target to quckly start a nomad agent locally in development mode
+nomad_start:
+	nomad agent -server -dev
+.PHONY: nomad_start
+
 test:
 	go test -v ./...
 .PHONY: test

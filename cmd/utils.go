@@ -7,6 +7,9 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+
+	"github.com/spf13/cobra"
+	"gitlab.com/qm64/backpack/pkg"
 )
 
 func isValidUrl(toTest string) bool {
@@ -70,4 +73,48 @@ func getAUsablePathOfFile(v string) string {
 	default:
 		return v
 	}
+}
+
+func getBackpackFromCLIInput(cmd *cobra.Command, args []string) pkg.Backpack {
+	b := pkg.Backpack{}
+
+	readFromDir, err := cmd.Flags().GetBool("unpacked")
+	if err != nil {
+		log.Fatalf("Error parsing CLI flags: %s", err)
+	}
+
+	if !readFromDir {
+		// get a file from URL or Path
+		p := getAUsablePathOfFile(args[0])
+
+		b, err = pkg.GetBackpackFromFile(p)
+		if err != nil {
+			log.Fatalf("Error parsing the backpack: %s", err)
+		}
+	} else {
+		// If we have to read from directory instead args[0] is a path
+		d, err := pkg.GetBackpackFromDirectory(args[0])
+		if err != nil {
+			log.Fatalf("Error parsing the unpacked backpack: %s", err)
+		}
+		b = *d
+	}
+
+	return b
+}
+
+func getValuesFromCLIInput(cmd *cobra.Command) pkg.ValuesType {
+	vfPath, err := cmd.Flags().GetString("values")
+	if err != nil {
+		log.Fatalf("Error parsing CLI flags: %s", err)
+	}
+
+	values := pkg.ValuesType{}
+	if vfPath != "" {
+		values, err = pkg.ValuesFromFile(vfPath)
+		if err != nil {
+			log.Fatalf("Error reading the value file: %s", err)
+		}
+	}
+	return values
 }

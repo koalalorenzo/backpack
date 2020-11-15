@@ -8,7 +8,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"gitlab.com/qm64/backpack/conn"
-	"gitlab.com/qm64/backpack/pkg"
 	"gitlab.com/qm64/backpack/templating"
 )
 
@@ -34,40 +33,15 @@ func init() {
 
 // This is the actual command..
 func runRun(cmd *cobra.Command, args []string) {
-	b := pkg.Backpack{}
+	b := getBackpackFromCLIInput(cmd, args)
 	var err error
 
-	readFromDir, _ := cmd.Flags().GetBool("unpacked")
-	if readFromDir {
-		// get a file from URL or Path
-		p := getAUsablePathOfFile(args[0])
-
-		b, err = pkg.GetBackpackFromFile(p)
-		if err != nil {
-			log.Fatalf("Error parsing the backpack: %s", err)
-		}
-	} else {
-		// If we have to read from directory instead args[0] is a path
-		d, err := pkg.GetBackpackFromDirectory(args[0])
-		b = *d
-		if err != nil {
-			log.Fatalf("Error parsing the unpacked backpack: %s", err)
-		}
-	}
-
-	client, err := conn.NewClinet()
+	client, err := conn.NewClient()
 	if err != nil {
 		log.Fatalf("Error creating new Nomad Client: %s", err)
 	}
 
-	vfPath, _ := cmd.Flags().GetString("values")
-	values := pkg.ValuesType{}
-	if vfPath != "" {
-		values, err = pkg.ValuesFromFile(vfPath)
-		if err != nil {
-			log.Fatalf("Error reading the value file: %s", err)
-		}
-	}
+	values := getValuesFromCLIInput(cmd)
 
 	// Populate the template into job files 💪
 	bts, err := templating.BuildHCL(&b, values)
@@ -88,11 +62,18 @@ func runRun(cmd *cobra.Command, args []string) {
 	// then store the job ID in the backpack to show it afterwards.
 	jIDs := map[string]string{}
 	for name, hcl := range bts {
-		jID, err := client.Run(string(hcl))
+		job, err := client.GetJob(string(hcl))
+		if err != nil {
+			log.Fatalf("Error obtaining job %s: %s", name, err)
+		}
+
+		// Run = Register the job
+		jr, err := client.Run(job)
 		if err != nil {
 			log.Fatalf("Error running %s: %s", name, err)
 		}
-		jIDs[name] = jID
+
+		jIDs[name] = jr.EvalID
 	}
 	b.JobsEvalIDs = jIDs
 
