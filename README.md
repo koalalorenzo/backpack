@@ -13,6 +13,9 @@ very different than Helm, as Kubernetes is way more than a scheduler.
 Read more [here](https://www.nomadproject.io/intro/vs/kubernetes.html) about
 the differences between k8s and nomad
 
+To learn more about the motivation behind the development of this project
+check [the blog post on Qm64 website](https://qm64.tech/posts/202011-hashicorp-nomad-backpack/).
+
 Backpack is currently tested against Nomad version 0.12.8
 
 ## TL;DR: Install
@@ -27,33 +30,35 @@ make install
 ```
 
 ## TL;DR How to Use
-
-**Create** your first backpack, by creating the directory structure:
+**Create** your first pack, by using the boilerplate directory structure:
 
 ```shell
 backpack create nginx
 ```
 
-**Pack** all the files into one single backpack:
+**Pack** all the files into one single pack:
 ```shell
 backpack pack ./nginx-0.1.0/
 ```
 
-**Customize** a pack default values to configure, enable, adjust the jobs:
+**Customize** the values for the template to configure, enable, adjust the jobs:
 ```shell
 backpack unpack values ./nginx-0.1.0.backpack -f ./values.yaml
 ```
 
+**Plan** and validate (dry-run) the jobs of a package before running:
+```shell
+backpack plan values ./nginx-0.1.0.backpack -f ./values.yaml
+```
+
 **Run** your Nomad Jobs with my custom values:
 ```shell
-export NOMAD_ADDR="http://127.0.0.1:4646"
-export NOMAD_TOKEN=""
 backpack run ./nginx-0.1.0.backpack -v ./values.yaml
 ```
 
 Unpack, customize or Run a backpack **from an URL**:
 ```shell
-backpack unpack https://backpack.qm64.tech/examples/redis-6.0.0.backpack
+backpack unpack values https://backpack.qm64.tech/examples/redis-6.0.0.backpack -f ./values.yaml
 backpack run https://backpack.qm64.tech/examples/redis-6.0.0.backpack -f values
 ```
 
