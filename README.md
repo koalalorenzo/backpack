@@ -16,6 +16,9 @@ the differences between k8s and nomad
 To learn more about the motivation behind the development of this project
 check [the blog post on Qm64 website](https://qm64.tech/posts/202011-hashicorp-nomad-backpack/).
 
+If you need some help or you want to stay updated with the latest news,
+[join Qm64's chatroom on Matrix](https://matrix.to/#/#qm64:matrix.org?via=matrix.org)
+
 Backpack is currently tested against Nomad version 0.12.8
 
 ## TL;DR: Install

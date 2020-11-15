@@ -13,9 +13,10 @@ import (
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
-	Use:   "run [path]",
-	Args:  cobra.ExactArgs(1),
-	Short: "Starts the jobs of a pack",
+	Use:     "run [path]",
+	Aliases: []string{"start", "install"},
+	Args:    cobra.ExactArgs(1),
+	Short:   "Starts the jobs of a pack",
 	Long: `It allows to run different jobs specified in the pack.
 It accepts one argument that is the path or URL of the file, but if the option 
 --unpacked (or -u is) passed it consider the first argument as the path of an
@@ -62,7 +63,7 @@ func runRun(cmd *cobra.Command, args []string) {
 	// then store the job ID in the backpack to show it afterwards.
 	jIDs := map[string]string{}
 	for name, hcl := range bts {
-		job, err := client.GetJob(string(hcl))
+		job, err := client.GetJobFromCode(string(hcl))
 		if err != nil {
 			log.Fatalf("Error obtaining job %s: %s", name, err)
 		}

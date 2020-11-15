@@ -24,7 +24,7 @@ func NewClient() (co *Client, err error) {
 
 // IsValid that is the question!
 func (co *Client) IsValid(code string) bool {
-	job, err := co.GetJob(code)
+	job, err := co.GetJobFromCode(code)
 	if err != nil {
 		return false
 	}

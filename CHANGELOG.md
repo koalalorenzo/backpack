@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added 
 - It is possible to plan changes and check the differences before applying them via `backpack plan` ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11), [#12](https://gitlab.com/Qm64/backpack/-/issues/12))
+- It is possible to stop jobs of a pack using `backpack stop` ([mr13](https://gitlab.com/Qm64/backpack/-/merge_requests/13), [#15](https://gitlab.com/Qm64/backpack/-/issues/15))
+- CLI Aliases for Helm users (ex: `backpack uninstall` is `backpack stop`)([mr13](https://gitlab.com/Qm64/backpack/-/merge_requests/13))
+
 ### Removed
 ### Changed
 - Optimize the Connection struct and avoid repeating tasks ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))

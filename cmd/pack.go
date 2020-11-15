@@ -12,8 +12,9 @@ import (
 
 // packCmd represents the pack command
 var packCmd = &cobra.Command{
-	Use:   "pack [path]",
-	Short: "Build a Backpack file (pack) from a directory/template",
+	Use:     "pack [path]",
+	Aliases: []string{"package"},
+	Short:   "Build a Backpack file (pack) from a directory/template",
 	Long: `Generate a Backpack file (pack) from a directory containing the various
 jobs, metadata and documentation.
 
