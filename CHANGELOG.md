@@ -6,18 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added 
-- It is possible to plan changes and check the differences before applying them via `backpack plan` ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11), [#12](https://gitlab.com/Qm64/backpack/-/issues/12))
-- It is possible to stop jobs of a pack using `backpack stop` ([mr13](https://gitlab.com/Qm64/backpack/-/merge_requests/13), [#15](https://gitlab.com/Qm64/backpack/-/issues/15))
-- CLI Aliases for Helm users (ex: `backpack uninstall` is `backpack stop`)([mr13](https://gitlab.com/Qm64/backpack/-/merge_requests/13))
+- It is possible to plan changes and check the differences before applying them via `backpack plan` ([!11](https://gitlab.com/Qm64/backpack/-/merge_requests/11), [#12](https://gitlab.com/Qm64/backpack/-/issues/12))
+- It is possible to stop jobs of a pack using `backpack stop` ([!13](https://gitlab.com/Qm64/backpack/-/merge_requests/13), [#15](https://gitlab.com/Qm64/backpack/-/issues/15))
+- CLI Aliases for Helm users (ex: `backpack uninstall` is `backpack stop`)([!13](https://gitlab.com/Qm64/backpack/-/merge_requests/13))
+- It is possible to check the jobs' allocations of a pack using `backpack status` ([!14](https://gitlab.com/Qm64/backpack/-/merge_requests/14))
 
 ### Removed
 ### Changed
-- Optimize the Connection struct and avoid repeating tasks ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))
-- Refactoring of `backpack run` to share part of the code with `backpack plan` ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))
-- Renamed type Backpack to Pack to differ the software from the packages ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
-- Upgraded to latest version of the dependencies ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
+- Optimize the Connection struct and avoid repeating tasks ([!11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))
+- Refactoring of `backpack run` to share part of the code with `backpack plan` ([!11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))
+- Renamed type Backpack to Pack to differ the software from the packages ([!12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
+- Upgraded to latest version of the dependencies ([!12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
 ### Fixed
-- Fixes network selection on `redis` and `fabiolb` examples when running docker ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
+- Fixes network selection on `redis` and `fabiolb` examples when running docker ([!12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
 
 ## [1.0.0] - 2020-10-12
 ### Added
@@ -28,4 +29,4 @@ This is the first release!
 - The CLI accepts both URLs and local paths ([#6](https://gitlab.com/Qm64/backpack/-/issues/6))
 - There are few example backpack files ([#5](https://gitlab.com/Qm64/backpack/-/issues/5))
 - A backpack includes markdown documentation ([#8](https://gitlab.com/Qm64/backpack/-/issues/8))
-- Ability to know what version of backpack I am running ([mr9](https://gitlab.com/Qm64/backpack/-/merge_requests/9))
+- Ability to know what version of backpack I am running ([!9](https://gitlab.com/Qm64/backpack/-/merge_requests/9))
