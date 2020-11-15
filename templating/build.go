@@ -12,9 +12,9 @@ import (
 	"gitlab.com/qm64/backpack/pkg"
 )
 
-// BuildHCL will gather the Backpack templates, the default values and
-// custom values to generate proper HCL that can be sent to nomad
-func BuildHCL(bpk *pkg.Backpack, cv pkg.ValuesType) (o map[string][]byte, err error) {
+// BuildHCL will gather the pack templates, the default values and custom values
+// to generate proper HCL that can be sent to nomad
+func BuildHCL(bpk *pkg.Pack, cv pkg.ValuesType) (o map[string][]byte, err error) {
 	// Get the default map properly from the raw bytes that contains comments
 	dvm := map[string]interface{}{}
 	err = yaml.Unmarshal(bpk.DefaultValues, dvm)

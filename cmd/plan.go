@@ -17,13 +17,13 @@ import (
 var planCmd = &cobra.Command{
 	Use:   "plan [path]",
 	Args:  cobra.ExactArgs(1),
-	Short: "Plan the jobs of a backpack",
-	Long: `It allows you to plan ahead before running/registering backapcks jobs.
+	Short: "Plan and check the changes before running a pack",
+	Long: `It allows you to plan ahead before running/registering jobs.
 It is useful when combined with existing jobs to validate changes. By default
 the output shows you a brief summary of changes, but if you want to see the 
 full changes being applied for each job in the backpack you can use the option
---verbose (or -v). Use the option --diff=false To disable the diff and just 
-check if all the jobs can be allocated (dry-run).
+--verbose. Use the option --diff=false To disable the diff and just check if all 
+the jobs can be allocated (dry-run).
 `,
 	Run: planRun,
 }
@@ -38,7 +38,7 @@ func init() {
 
 // This is the actual command..
 func planRun(cmd *cobra.Command, args []string) {
-	b := getBackpackFromCLIInput(cmd, args)
+	b := getPackFromCLIInput(cmd, args)
 	var err error
 
 	client, err := conn.NewClient()

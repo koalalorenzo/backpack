@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBackpackUnpack(t *testing.T) {
+func TestPackUnpack(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
@@ -22,11 +22,11 @@ func TestBackpackUnpack(t *testing.T) {
 	assert.NoError(t, err)
 
 	// Get the bundle
-	b, err := GetBackpackFromFile(filepath.Join(bundleTestDirPath, "redis.backpack"))
+	b, err := GetPackFromFile(filepath.Join(bundleTestDirPath, "redis.backpack"))
 	assert.NoError(t, err)
 
 	t.Logf("Temp dir: %s", tempDir)
-	err = UnpackBackpackInDirectory(&b, tempDir)
+	err = UnpackInDirectory(&b, tempDir)
 	assert.NoError(t, err)
 
 	expectations := map[string]string{

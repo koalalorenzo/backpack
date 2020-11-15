@@ -8,8 +8,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// UnpackBackpackInDirectory will write the Backpack's backpack into a directory.
-func UnpackBackpackInDirectory(b *Backpack, dirPath string) (err error) {
+// UnpackInDirectory will extract files of a pack into a directory.
+func UnpackInDirectory(b *Pack, dirPath string) (err error) {
 	// Unpack Templates
 	for n, f := range b.Templates {
 		terr := ioutil.WriteFile(filepath.Join(dirPath, n), f, 0744)

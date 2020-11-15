@@ -30,22 +30,15 @@ job {{ quote .job_name }} {
       size = 300
     }
 
-    network {
-      port "db" {
-        {{- if .service.port }}
-        static = {{ .service.port }}
-        {{- end }}
-        to = 6379
-      }
-    }
-
     task "redis" {
       {{- if eq .driver "docker" }}
       driver = "docker"
 
       config {
         image = "{{ .docker.image }}:{{ .docker.tag }}"
-        ports = ["db"]
+        port_map {
+          db = 6379
+        }
       }
       {{- end }}
 
@@ -57,12 +50,17 @@ job {{ quote .job_name }} {
       }
       {{- end }}
 
-      {{- if .resources }}
       resources {
+      {{- if .resources }}
         cpu    = {{ .resources.cpu }}
         memory = {{ .resources.memory }}
-      }
       {{- end }}
+
+        network {
+          mbits = 10
+          port "db" {}
+        }
+      }
 
       {{- if .service.enable }}
       service {

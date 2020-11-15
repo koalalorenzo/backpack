@@ -75,8 +75,8 @@ func getAUsablePathOfFile(v string) string {
 	}
 }
 
-func getBackpackFromCLIInput(cmd *cobra.Command, args []string) pkg.Backpack {
-	b := pkg.Backpack{}
+func getPackFromCLIInput(cmd *cobra.Command, args []string) pkg.Pack {
+	b := pkg.Pack{}
 
 	readFromDir, err := cmd.Flags().GetBool("unpacked")
 	if err != nil {
@@ -87,15 +87,15 @@ func getBackpackFromCLIInput(cmd *cobra.Command, args []string) pkg.Backpack {
 		// get a file from URL or Path
 		p := getAUsablePathOfFile(args[0])
 
-		b, err = pkg.GetBackpackFromFile(p)
+		b, err = pkg.GetPackFromFile(p)
 		if err != nil {
-			log.Fatalf("Error parsing the backpack: %s", err)
+			log.Fatalf("Error parsing the pack: %s", err)
 		}
 	} else {
 		// If we have to read from directory instead args[0] is a path
-		d, err := pkg.GetBackpackFromDirectory(args[0])
+		d, err := pkg.GetPackFromDirectory(args[0])
 		if err != nil {
-			log.Fatalf("Error parsing the unpacked backpack: %s", err)
+			log.Fatalf("Error parsing the unpacked pack: %s", err)
 		}
 		b = *d
 	}

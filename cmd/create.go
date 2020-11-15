@@ -35,7 +35,7 @@ func init() {
 
 func createRun(cmd *cobra.Command, args []string) {
 	name := args[0]
-	b := pkg.Backpack{
+	b := pkg.Pack{
 		Name:         name,
 		Version:      "0.1.0",
 		Dependencies: map[string]string{"TODO": "http://backpack.qm64.com/example.backpack"},
@@ -111,7 +111,7 @@ Have fun! 😄
 		}
 	}
 
-	err = pkg.UnpackBackpackInDirectory(&b, directory)
+	err = pkg.UnpackInDirectory(&b, directory)
 	if err != nil {
 		log.Fatalf("Error unpacking: %s", err)
 	}
