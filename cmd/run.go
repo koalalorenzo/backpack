@@ -34,30 +34,8 @@ func init() {
 
 // This is the actual command..
 func runRun(cmd *cobra.Command, args []string) {
-	b := pkg.Backpack{}
+	b := getBackpackFromCLIInput(cmd, args)
 	var err error
-
-	readFromDir, err := cmd.Flags().GetBool("unpacked")
-	if err != nil {
-		log.Fatalf("Error parsing CLI flags: %s", err)
-	}
-
-	if !readFromDir {
-		// get a file from URL or Path
-		p := getAUsablePathOfFile(args[0])
-
-		b, err = pkg.GetBackpackFromFile(p)
-		if err != nil {
-			log.Fatalf("Error parsing the backpack: %s", err)
-		}
-	} else {
-		// If we have to read from directory instead args[0] is a path
-		d, err := pkg.GetBackpackFromDirectory(args[0])
-		if err != nil {
-			log.Fatalf("Error parsing the unpacked backpack: %s", err)
-		}
-		b = *d
-	}
 
 	client, err := conn.NewClient()
 	if err != nil {
