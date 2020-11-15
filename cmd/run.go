@@ -37,8 +37,12 @@ func runRun(cmd *cobra.Command, args []string) {
 	b := pkg.Backpack{}
 	var err error
 
-	readFromDir, _ := cmd.Flags().GetBool("unpacked")
-	if readFromDir {
+	readFromDir, err := cmd.Flags().GetBool("unpacked")
+	if err != nil {
+		log.Fatalf("Error parsing CLI flags: %s", err)
+	}
+
+	if !readFromDir {
 		// get a file from URL or Path
 		p := getAUsablePathOfFile(args[0])
 
@@ -49,13 +53,13 @@ func runRun(cmd *cobra.Command, args []string) {
 	} else {
 		// If we have to read from directory instead args[0] is a path
 		d, err := pkg.GetBackpackFromDirectory(args[0])
-		b = *d
 		if err != nil {
 			log.Fatalf("Error parsing the unpacked backpack: %s", err)
 		}
+		b = *d
 	}
 
-	client, err := conn.NewClinet()
+	client, err := conn.NewClient()
 	if err != nil {
 		log.Fatalf("Error creating new Nomad Client: %s", err)
 	}
@@ -88,11 +92,11 @@ func runRun(cmd *cobra.Command, args []string) {
 	// then store the job ID in the backpack to show it afterwards.
 	jIDs := map[string]string{}
 	for name, hcl := range bts {
-		jID, err := client.Run(string(hcl))
+		job, err := client.Run(string(hcl))
 		if err != nil {
 			log.Fatalf("Error running %s: %s", name, err)
 		}
-		jIDs[name] = jID
+		jIDs[name] = job.EvalID
 	}
 	b.JobsEvalIDs = jIDs
 
