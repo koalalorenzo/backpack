@@ -24,11 +24,10 @@ var planCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(planCmd)
-	planCmd.Flags().BoolP("diff", "d", false, "show the differences of changes applied")
+	planCmd.Flags().BoolP("diff", "d", true, "show the differences of changes applied")
 	planCmd.Flags().Bool("verbose", false, "show the full changes applied not just top level")
 	planCmd.Flags().StringP("values", "v", "", "specifies the file to use for values and ensure to populate the Go Templates")
 	planCmd.Flags().BoolP("unpacked", "u", false, "instead of reading from a file, read from a directory")
-	planCmd.Flags().Bool("debug", false, "prints the jobs on stdout instead of sending them to nomad")
 }
 
 // This is the actual command..
@@ -48,23 +47,15 @@ func planRun(cmd *cobra.Command, args []string) {
 		log.Fatalf("Error parsing CLI flags (verbose): %s", err)
 	}
 
-	debugFlag, err := cmd.Flags().GetBool("debug")
+	diffPlan, err := cmd.Flags().GetBool("diff")
 	if err != nil {
-		log.Fatalf("Error parsing CLI flags (debug): %s", err)
+		log.Fatalf("Error parsing CLI flags (diff): %s", err)
 	}
 
 	// Populate the template into job files 💪
 	bts, err := templating.BuildHCL(&b, values)
 	if err != nil {
 		log.Fatalf("Error building the HCL files: %s", err)
-	}
-
-	if debugFlag {
-		for name, hcl := range bts {
-			log.Printf("File: %s\n", name)
-			fmt.Println(string(hcl))
-		}
-		return
 	}
 
 	// Prepare a table for the output in a buffer. This is done so that we can
@@ -75,10 +66,13 @@ func planRun(cmd *cobra.Command, args []string) {
 	}
 
 	defer rt.Close()
-	w := tabwriter.NewWriter(wt, 3, 0, 2, ' ', 0)
-	fmt.Fprintln(w, "Recap of Job Plans")
-	fmt.Fprintln(w, "File Name\tCheck Index\tDiff Type\tPlan warnings")
-
+	w := tabwriter.NewWriter(wt, 3, 0, 4, ' ', 0)
+	fmt.Fprintf(w, "Recap of Job Plans in \"%s\" backpack:\n", b.Name)
+	if !diffPlan {
+		fmt.Fprintln(w, "File Name\tCheck Index\tDry Run status\tPlan warnings")
+	} else {
+		fmt.Fprintln(w, "File Name\tCheck Index\tDiff type\tDry run status\tWarnings")
+	}
 	// For each job file perform the plan! 🚀
 	for name, hcl := range bts {
 		job, err := client.GetJob(string(hcl))
@@ -87,12 +81,31 @@ func planRun(cmd *cobra.Command, args []string) {
 		}
 
 		// always show the diff for plan
-		p, err := client.Plan(job, true)
+		p, err := client.Plan(job, diffPlan)
 		if err != nil {
 			log.Fatalf("Error running %s: %s", name, err)
 		}
+
+		// Makes it clear that there are no Warnings
+		if p.Warnings == "" {
+			p.Warnings = "None"
+		}
+
+		// Check if dry-run was successfull. This helps understanding if the tasks
+		// are allocated properly on the nodes or not
+		dryRunStatus := "Success"
+		if len(p.FailedTGAllocs) != 0 {
+			dryRunStatus = fmt.Sprintf("%d allocations failed", len(p.FailedTGAllocs))
+		}
+
+		// If we disabled diff just populate the table and skip
+		if !diffPlan {
+			fmt.Fprintf(w, "%s\t%d\t%s\t%s\t\n", name, p.JobModifyIndex, dryRunStatus, p.Warnings)
+			continue
+		}
+
 		// Write in the table in the buffer output
-		fmt.Fprintf(w, "%s\t%d\t%s\t%s\t\n", name, p.JobModifyIndex, p.Diff.Type, p.Warnings)
+		fmt.Fprintf(w, "%s\t%d\t%s\t%s\t%s\t\n", name, p.JobModifyIndex, p.Diff.Type, dryRunStatus, p.Warnings)
 
 		// Write in the output the diff from the previous output
 		fmt.Printf("Plan for job %s\n", name)
