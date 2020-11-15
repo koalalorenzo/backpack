@@ -11,7 +11,7 @@ import (
 	"gitlab.com/qm64/backpack/pkg"
 )
 
-// docsCmd represents the docs command
+// docsCmd represents the unpack docs command
 var docsCmd = &cobra.Command{
 	Use:   "docs [path]",
 	Args:  cobra.ExactArgs(1),
