@@ -14,11 +14,10 @@ import (
 var valuesCmd = &cobra.Command{
 	Use:   "values [path]",
 	Args:  cobra.ExactArgs(1),
-	Short: "Extracts the default values of a backpack into a yaml files",
-	Long: `Extracts the default values of a backpack (specified as first argument
-as either an existing path or URL) into a yaml file. If no file path is 
-specified in the option -f or --file a new file called values.yaml will be 
-created
+	Short: "Extracts the default values of a pack into a yaml files",
+	Long: `Extracts the default values of a pack (specified as first argument as 
+either an existing path or URL) into a yaml file. If no path is specified in 
+the option --file (or -f) a new file called values.yaml will be created.
 `,
 	Run: unpackValuesRun,
 }

@@ -15,11 +15,11 @@ import (
 var runCmd = &cobra.Command{
 	Use:   "run [path]",
 	Args:  cobra.ExactArgs(1),
-	Short: "Starts the jobs of a backpack",
-	Long: `It allows to run different jobs specified in the backpack.
+	Short: "Starts the jobs of a pack",
+	Long: `It allows to run different jobs specified in the pack.
 It accepts one argument that is the path or URL of the file, but if the option 
 --unpacked (or -u is) passed it consider the first argument as the path of an
-unpacked backpack directory that will be used instead of a file.
+unpacked directory that will be used instead of a file.
 `,
 	Run: runRun,
 }

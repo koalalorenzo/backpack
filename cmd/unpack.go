@@ -15,21 +15,23 @@ var unpackCmd = &cobra.Command{
 	Use:   "unpack [file.backpack]",
 	Args:  cobra.ExactArgs(1),
 	Run:   unpackRun,
-	Short: "Opens a Backpack file to explore content",
-	Long: `Explodes the backpack inside a directory. This is useful to edit a
-Backpack, inspecting it or seeing default values
+	Short: "Opens a pack file to explore content",
+	Long: `Explodes/Open the pack inside a directory. This is useful to edit a
+pack, inspecting it or seeing default values... or if you are looking for
+something inside it and you know it is at the bottom of the backpack!
 
-This command performs the opposite of "pack" command
+This command accepts one argument that is the path of a pack to extract the data 
+from (path or URL). Unless specified via -d or --dir, the files will be 
+extracted in a new directory in the CWD, with the name and version of the 
+original pack.
 
-This command accepts one argument that is backpack to extract the data from 
-(path or URL). Unless specified via -d or --dir, the files will be extracted in 
-a new directory in the CWD, with the name and version of the backpack
-
-The Backpack includes:
+A pack includes the following files:
 - backpack.yaml (containing metadata)
 - values.yaml (containing the default values for the templates)
 - *.nomad (representing the various go templates of Nomad Jobs)
 - *.md (useful documentation)
+
+This command performs the opposite of "backpack pack [...]" command.
 `,
 }
 
