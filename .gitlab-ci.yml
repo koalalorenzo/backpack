@@ -35,6 +35,7 @@ build:development:
     expire_in: 1 week
   except:
     - master
+    - tags
 
 build:master:
   extends: .buildbase
