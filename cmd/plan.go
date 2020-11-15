@@ -15,9 +15,10 @@ import (
 
 // planCmd represents the run command
 var planCmd = &cobra.Command{
-	Use:   "plan [path]",
-	Args:  cobra.ExactArgs(1),
-	Short: "Plan and check the changes before running a pack",
+	Use:     "plan [path]",
+	Aliases: []string{"diff", "dry-run"},
+	Args:    cobra.ExactArgs(1),
+	Short:   "Plan and check the changes before running a pack",
 	Long: `It allows you to plan ahead before running/registering jobs.
 It is useful when combined with existing jobs to validate changes. By default
 the output shows you a brief summary of changes, but if you want to see the 
@@ -81,7 +82,7 @@ func planRun(cmd *cobra.Command, args []string) {
 	}
 	// For each job file perform the plan! 🚀
 	for name, hcl := range bts {
-		job, err := client.GetJob(string(hcl))
+		job, err := client.GetJobFromCode(string(hcl))
 		if err != nil {
 			log.Fatalf("Error obtaining job %s: %s", name, err)
 		}

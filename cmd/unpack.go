@@ -12,10 +12,11 @@ import (
 
 // unpackCmd represents the unpack command
 var unpackCmd = &cobra.Command{
-	Use:   "unpack [file.backpack]",
-	Args:  cobra.ExactArgs(1),
-	Run:   unpackRun,
-	Short: "Opens a pack file to explore content",
+	Use:     "unpack [file.backpack]",
+	Aliases: []string{"pull"},
+	Args:    cobra.ExactArgs(1),
+	Run:     unpackRun,
+	Short:   "Opens a pack file to explore content",
 	Long: `Explodes/Open the pack inside a directory. This is useful to edit a
 pack, inspecting it or seeing default values... or if you are looking for
 something inside it and you know it is at the bottom of the backpack!
