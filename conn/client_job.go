@@ -13,3 +13,20 @@ func (co *Client) GetJobStatus(jobId string) (j *api.Job, err error) {
 	j, _, err = co.jobs.Info(jobId, nil)
 	return
 }
+
+func (co *Client) GetJobAllocations(jobId string) (alls []*api.Allocation, err error) {
+	allList, _, err := co.jobs.Allocations(jobId, false, nil)
+	if err != nil {
+		return
+	}
+
+	alls = []*api.Allocation{}
+	for _, al := range allList {
+		alloc, _, err := co.alloc.Info(al.ID, nil)
+		if err != nil {
+			return []*api.Allocation{}, err
+		}
+		alls = append(alls, alloc)
+	}
+	return
+}

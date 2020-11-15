@@ -19,7 +19,10 @@ var stopCmd = &cobra.Command{
 	Aliases: []string{"uninstall", "delete"},
 	Args:    cobra.ExactArgs(1),
 	Short:   "Stop all the jobs in a pack",
-	Long: `
+	Long: `This command will stop all the jobs available in a pack. By default it
+mimics nomad CLI, that keeps the job as "dead" until the garbage collector
+deletes the job. If you want to delete the jobs entirely and lose all the setup
+you can pass the option --purge (or -p).
 `,
 	Run: stopRun,
 }

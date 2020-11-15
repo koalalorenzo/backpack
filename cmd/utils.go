@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 	"gitlab.com/qm64/backpack/pkg"
@@ -117,4 +118,8 @@ func getValuesFromCLIInput(cmd *cobra.Command) pkg.ValuesType {
 		}
 	}
 	return values
+}
+
+func sanitizeUUIDPrefix(s string) string {
+	return strings.Split(s, "-")[0]
 }

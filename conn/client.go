@@ -5,8 +5,9 @@ import (
 )
 
 type Client struct {
-	c    *api.Client
-	jobs *api.Jobs
+	c     *api.Client
+	jobs  *api.Jobs
+	alloc *api.Allocations
 }
 
 // NewClient returns a new client configured with the default values for Nomad
@@ -18,7 +19,7 @@ func NewClient() (co *Client, err error) {
 		return nil, err
 	}
 	co.jobs = co.c.Jobs()
-
+	co.alloc = co.c.Allocations()
 	return
 }
 
