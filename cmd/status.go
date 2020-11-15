@@ -22,7 +22,10 @@ var statusCmd = &cobra.Command{
 	Args:    cobra.ExactArgs(1),
 	Short:   "Check the status of all the jobs in a pack",
 	Long: `Run this command to know the status of all the jobs in a pack. It will
-check and provide useful information.
+check and provide useful information. By default it shows the allocations that
+are running, or the first allocation available. If you want to see all the
+previous allocation you can use the option --all (or -a).
+
 `,
 	Run: statusRun,
 }

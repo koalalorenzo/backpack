@@ -13,7 +13,7 @@ import (
 	"gitlab.com/qm64/backpack/templating"
 )
 
-// stopCmd represents the run command
+// stopCmd represents the stop command
 var stopCmd = &cobra.Command{
 	Use:     "stop [path]",
 	Aliases: []string{"uninstall", "delete"},

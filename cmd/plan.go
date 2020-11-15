@@ -13,7 +13,7 @@ import (
 	"gitlab.com/qm64/backpack/templating"
 )
 
-// planCmd represents the run command
+// planCmd represents the plan command
 var planCmd = &cobra.Command{
 	Use:     "plan [path]",
 	Aliases: []string{"diff", "dry-run"},
