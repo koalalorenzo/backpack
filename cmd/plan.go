@@ -38,7 +38,7 @@ func init() {
 
 // This is the actual command..
 func planRun(cmd *cobra.Command, args []string) {
-	b := getBackpackFromCLIInput(cmd, args)
+	b := getPackFromCLIInput(cmd, args)
 	var err error
 
 	client, err := conn.NewClient()

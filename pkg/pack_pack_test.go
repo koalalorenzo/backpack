@@ -9,13 +9,13 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func TestBackpackPackDirectory(t *testing.T) {
+func TestPackPackDirectory(t *testing.T) {
 	// extract the test file name
 	_, filename, _, _ := runtime.Caller(0)
 	bundlePackageGoDir := filepath.Dir(filename)
 	bundleTestDirPath := filepath.Join(bundlePackageGoDir, "../test_files/backpack/")
 
-	b, err := GetBackpackFromDirectory(bundleTestDirPath)
+	b, err := GetPackFromDirectory(bundleTestDirPath)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "redis", b.Name)

@@ -7,8 +7,9 @@ import (
 	"github.com/vmihailenco/msgpack"
 )
 
-// GetBackpackFromFile will read and get a Backpack from a file path
-func GetBackpackFromFile(path string) (b Backpack, err error) {
+// GetPackFromFile will read and get a Pack from a file path and return as a
+// Pack struct
+func GetPackFromFile(path string) (b Pack, err error) {
 	bb, err := ioutil.ReadFile(path)
 	if err != nil {
 		return
@@ -16,33 +17,33 @@ func GetBackpackFromFile(path string) (b Backpack, err error) {
 
 	err = msgpack.Unmarshal(bb, &b)
 	if err != nil {
-		return Backpack{}, err
+		return Pack{}, err
 	}
 
 	// Decode Templates to Base64
 	b.Templates, err = decodeB64FilesMap(b.Templates)
 	if err != nil {
-		return Backpack{}, err
+		return Pack{}, err
 	}
 	b.SortTemplates()
 
 	// Decode Documentation
 	b.Documentation, err = decodeB64FilesMap(b.Documentation)
 	if err != nil {
-		return Backpack{}, err
+		return Pack{}, err
 	}
 
 	// Decode Default Values
 	b.DefaultValues, err = base64.StdEncoding.DecodeString(string(b.DefaultValues))
 	if err != nil {
-		return Backpack{}, err
+		return Pack{}, err
 	}
 
 	return
 }
 
-// WriteBackpackToFile will write a Backpack to file
-func WriteBackpackToFile(b Backpack, path string) (err error) {
+// WritePackToFile will write a Pack to file
+func WritePackToFile(b Pack, path string) (err error) {
 	// Encode to base64
 	b.Templates, _ = encodeB64FilesMap(b.Templates)
 	b.Documentation, _ = encodeB64FilesMap(b.Documentation)

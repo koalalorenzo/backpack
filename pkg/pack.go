@@ -7,9 +7,9 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
-// Backpack is the structure of the package/file that will use to export, share
+// Pack is the structure of the package/file that will use to export, share
 // exchange templates, docs and configuration
-type Backpack struct {
+type Pack struct {
 	Name         string            `yaml:"name"`
 	Version      string            `yaml:"version"`    // Please use semver
 	Dependencies map[string]string `yaml:",omitempty"` // URLs for dependencies? TBD
@@ -39,7 +39,7 @@ type Backpack struct {
 // SortTemplates is used to ensure that files names sorting is respected.
 // This is useful to define an "order" to follow when applying resources if that
 // is needed.
-func (b *Backpack) SortTemplates() {
+func (b *Pack) SortTemplates() {
 	nm := make(FilesMapType, len(b.Templates))
 	sk := make([]string, 0, len(b.Templates))
 
@@ -59,7 +59,7 @@ func (b *Backpack) SortTemplates() {
 }
 
 // FilesMapType is useful type to specify what kind of Mapping we are using to
-// store files in the backpack.
+// store files in the pack.
 type FilesMapType map[string][]byte
 
 func decodeB64FilesMap(ra FilesMapType) (x FilesMapType, err error) {

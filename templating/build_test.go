@@ -8,7 +8,7 @@ import (
 )
 
 func TestBuildHCL(t *testing.T) {
-	bp := pkg.Backpack{
+	bp := pkg.Pack{
 		Name:    "test-backpack",
 		Version: "0.1.0",
 		Templates: map[string][]byte{

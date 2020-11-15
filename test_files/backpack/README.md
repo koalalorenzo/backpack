@@ -1,3 +1,3 @@
 # Documentation
 
-The documentation for this backpack is also part of the test!
+The documentation for this pack is also part of the test!

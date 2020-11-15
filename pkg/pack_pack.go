@@ -35,10 +35,10 @@ func getAllFileWithExtension(ext, basePath string) (FilesMapType, error) {
 	return tempMap, nil
 }
 
-// GetBackpackFromDirectory will look in a given path for backpack.yaml and .nomad
-// files to Backpack them together.
-func GetBackpackFromDirectory(dirPath string) (b *Backpack, err error) {
-	b = &Backpack{}
+// GetPackFromDirectory will look in a given path for backpack.yaml and .nomad
+// files to pack them together in a Pack struct.
+func GetPackFromDirectory(dirPath string) (b *Pack, err error) {
+	b = &Pack{}
 
 	// Get the backpack.yaml file
 	bpBytes, err := ioutil.ReadFile(filepath.Join(dirPath, "backpack.yaml"))

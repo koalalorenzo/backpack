@@ -40,7 +40,7 @@ func packRun(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	b, err := pkg.GetBackpackFromDirectory(args[0])
+	b, err := pkg.GetPackFromDirectory(args[0])
 	if err != nil {
 		log.Fatalf("Error generating the backpack from the directory: %s", err)
 	}
@@ -51,7 +51,7 @@ func packRun(cmd *cobra.Command, args []string) {
 		writeTo = fileFlag
 	}
 
-	err = pkg.WriteBackpackToFile(*b, writeTo)
+	err = pkg.WritePackToFile(*b, writeTo)
 	if err != nil {
 		log.Fatalf("Error writing to file: %s", err)
 	}
