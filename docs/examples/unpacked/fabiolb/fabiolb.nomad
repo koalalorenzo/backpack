@@ -34,10 +34,15 @@ job {{ quote .job_name }} {
       
       config {
         image = "{{ .docker.image }}:{{ .docker.tag }}"
-        {{- if .docker.network_mode }}
-        network_mode = {{ quote .docker.network_mode }}
+        {{- if .services.network_mode }}
+        network_mode = {{ quote .services.network_mode }}
         {{- end }}
-        ports = ["proxy"{{ if .services.ui.enable }}, "ui" {{ end }}]
+        port_map {
+          proxy = 9999
+          {{- if .services.ui.enable }}
+          ui = 9998 
+          {{- end }}
+        }
       }
       
       {{ else }}
@@ -56,6 +61,27 @@ job {{ quote .job_name }} {
       {{/* Close With driver check */}}
       {{- end }}
 
+      resources {
+      {{- if .resources }}
+        cpu    = {{ .resources.cpu }}
+        memory = {{ .resources.memory }}
+      {{- end }}
+      {{- if eq .driver "docker" }}
+        network {
+          port "proxy" {
+            {{- if .services.proxy.port }}
+            static = {{ .services.proxy.port }}
+            {{- end }}
+          }
+          port "ui" {
+            {{- if .services.ui.port }} 
+            static = {{ .services.ui.port }}
+            {{- end }}
+          }
+        }
+      {{- end }}
+      }
+
       env {
         FABIO_PROXY_ADDR = ":${NOMAD_PORT_proxy}"
         {{- if .services.ui.enable }}
@@ -64,7 +90,9 @@ job {{ quote .job_name }} {
       }
     }
 
+    {{- if ne .driver "docker" }}
     network {
+      mode = {{ quote .services.network_mode }}
       port "proxy" {
         {{- if .services.proxy.port }}
         static = {{ .services.proxy.port }}
@@ -78,5 +106,6 @@ job {{ quote .job_name }} {
       }
       {{- end }}
     }
+    {{- end }}
   }
 }
