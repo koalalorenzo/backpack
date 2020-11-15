@@ -6,8 +6,8 @@ count: 1
 
 job_name: fabiolb
 
-# Driver will allow you to specify how we are running FabioLB. It can be docker
-# "exec" or "raw_exec".
+# Driver will allow you to specify how we are running FabioLB. It can be 
+# "docker", "exec", or "raw_exec".
 driver: raw_exec
 
 # Configuration used when Docker is set as Driver:
