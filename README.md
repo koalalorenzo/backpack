@@ -13,12 +13,16 @@ very different than Helm, as Kubernetes is way more than a scheduler.
 Read more [here](https://www.nomadproject.io/intro/vs/kubernetes.html) about
 the differences between k8s and nomad
 
-Backpack is currently tested against Nomad version 0.12.5
+Backpack is currently tested against Nomad version 0.12.8
 
 ## TL;DR: Install
+You can manually download the latest release from 
+[the release page here](https://gitlab.com/Qm64/backpack/-/releases).
 
+Or compile the binaries:
 ```shell
-make
+go get -v gitlab.com/Qm64/backpack
+cd $GOPATH/src/gitlab.com/Qm64/backpack/
 make install
 ```
 

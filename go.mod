@@ -12,7 +12,7 @@ require (
 	github.com/hashicorp/cronexpr v1.1.1 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0
-	github.com/hashicorp/nomad/api v0.0.0-20201113204434-b5a4871e8dfb
+	github.com/hashicorp/nomad/api v0.0.0-20201115152218-974039ba8bf6
 	github.com/huandu/xstrings v1.3.2 // indirect
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
