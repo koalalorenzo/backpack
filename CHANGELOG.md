@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed type Backpack to Pack to differ the software from the packages ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
 - Upgraded to latest version of the dependencies ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
 ### Fixed
+- Fixes network selection on `redis` and `fabiolb` examples when running docker ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
 
 ## [1.0.0] - 2020-10-12
 ### Added
