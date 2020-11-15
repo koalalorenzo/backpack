@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Optimize the Connection struct and avoid repeating tasks ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))
 - Refactoring of `backpack run` to share part of the code with `backpack plan` ([mr11](https://gitlab.com/Qm64/backpack/-/merge_requests/11))
+- Renamed type Backpack to Pack to differ the software from the packages ([mr12](https://gitlab.com/Qm64/backpack/-/merge_requests/12)))
 ### Fixed
 
 ## [1.0.0] - 2020-10-12
