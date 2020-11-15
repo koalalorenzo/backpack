@@ -19,7 +19,8 @@ docker:
 exec:
   # To get the right version and the go Version, have a look at the GitHub
   # release page: https://github.com/fabiolb/fabio/releases/latest
-  version: "1.5.14-go1.15"
+  version: "1.5.14"
+  fullVersion: "1.5.14-go1.15"
 
 services:
   # Proxy is enabled by default

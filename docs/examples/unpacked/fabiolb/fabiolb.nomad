@@ -45,10 +45,10 @@ job {{ quote .job_name }} {
       driver = {{ quote .driver }}
       {{- with .exec }}
       artifact {
-        source = "https://github.com/fabiolb/fabio/releases/download/v{{ .version }}/fabio-{{ .version }}-${attr.kernel.name}_${attr.cpu.arch}"
+        source = "https://github.com/fabiolb/fabio/releases/download/v{{ .version }}/fabio-{{ .fullVersion }}-${attr.kernel.name}_${attr.cpu.arch}"
       }
       config {
-        command = "./fabio-{{ .version }}-${attr.kernel.name}_${attr.cpu.arch}"
+        command = "./fabio-{{ .fullVersion }}-${attr.kernel.name}_${attr.cpu.arch}"
       }
       {{/* Close With .exec */}}
       {{- end }}
