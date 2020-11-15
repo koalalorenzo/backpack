@@ -5,7 +5,8 @@ import (
 )
 
 type Client struct {
-	c *api.Client
+	c    *api.Client
+	jobs *api.Jobs
 }
 
 // NewClient returns a new client configured with the default values for Nomad
@@ -16,19 +17,19 @@ func NewClient() (co *Client, err error) {
 	if err != nil {
 		return nil, err
 	}
+	co.jobs = co.c.Jobs()
 
 	return
 }
 
 // IsValid that is the question!
 func (co *Client) IsValid(code string) bool {
-	japi := co.c.Jobs()
-	job, err := japi.ParseHCL(code, true)
+	job, err := co.GetJob(code)
 	if err != nil {
 		return false
 	}
 
-	res, _, err := japi.Validate(job, nil)
+	res, _, err := co.jobs.Validate(job, nil)
 	if err != nil {
 		return false
 	}

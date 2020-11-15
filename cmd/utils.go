@@ -102,3 +102,33 @@ func getBackpackFromCLIInput(cmd *cobra.Command, args []string) pkg.Backpack {
 
 	return b
 }
+
+func getValuesFromCLIInput(cmd *cobra.Command) pkg.ValuesType {
+	vfPath, err := cmd.Flags().GetString("values")
+	if err != nil {
+		log.Fatalf("Error parsing CLI flags: %s", err)
+	}
+
+	values := pkg.ValuesType{}
+	if vfPath != "" {
+		values, err = pkg.ValuesFromFile(vfPath)
+		if err != nil {
+			log.Fatalf("Error reading the value file: %s", err)
+		}
+	}
+	return values
+}
+
+// getDiffSimbol returns the symbol to use for Plan output
+func getDiffSimbol(diffType string) string {
+	switch diffType {
+	case "Added":
+		return "+"
+	case "Deleted":
+		return "-"
+	case "Edited":
+		return "+/-"
+	default:
+		return ""
+	}
+}

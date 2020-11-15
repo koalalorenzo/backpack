@@ -8,7 +8,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"gitlab.com/qm64/backpack/conn"
-	"gitlab.com/qm64/backpack/pkg"
 	"gitlab.com/qm64/backpack/templating"
 )
 
@@ -42,14 +41,7 @@ func runRun(cmd *cobra.Command, args []string) {
 		log.Fatalf("Error creating new Nomad Client: %s", err)
 	}
 
-	vfPath, _ := cmd.Flags().GetString("values")
-	values := pkg.ValuesType{}
-	if vfPath != "" {
-		values, err = pkg.ValuesFromFile(vfPath)
-		if err != nil {
-			log.Fatalf("Error reading the value file: %s", err)
-		}
-	}
+	values := getValuesFromCLIInput(cmd)
 
 	// Populate the template into job files 💪
 	bts, err := templating.BuildHCL(&b, values)
@@ -70,11 +62,18 @@ func runRun(cmd *cobra.Command, args []string) {
 	// then store the job ID in the backpack to show it afterwards.
 	jIDs := map[string]string{}
 	for name, hcl := range bts {
-		job, err := client.Run(string(hcl))
+		job, err := client.GetJob(string(hcl))
+		if err != nil {
+			log.Fatalf("Error obtaining job %s: %s", name, err)
+		}
+
+		// Run = Register the job
+		jr, err := client.Run(job)
 		if err != nil {
 			log.Fatalf("Error running %s: %s", name, err)
 		}
-		jIDs[name] = job.EvalID
+
+		jIDs[name] = jr.EvalID
 	}
 	b.JobsEvalIDs = jIDs
 
