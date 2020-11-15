@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 	"text/tabwriter"
 
 	"github.com/spf13/cobra"
@@ -75,6 +76,7 @@ func planRun(cmd *cobra.Command, args []string) {
 
 	defer rt.Close()
 	w := tabwriter.NewWriter(wt, 3, 0, 2, ' ', 0)
+	fmt.Fprintln(w, "Recap of Job Plans")
 	fmt.Fprintln(w, "File Name\tCheck Index\tDiff Type\tPlan warnings")
 
 	// For each job file perform the plan! 🚀
@@ -93,23 +95,53 @@ func planRun(cmd *cobra.Command, args []string) {
 		fmt.Fprintf(w, "%s\t%d\t%s\t%s\t\n", name, p.JobModifyIndex, p.Diff.Type, p.Warnings)
 
 		// Write in the output the diff from the previous output
-		log.Print("Plan for job", name)
-		fmt.Printf("  %s Job: %s\n", getDiffSimbol(p.Diff.Type), *job.ID)
+		fmt.Printf("Plan for job %s\n", name)
+		fmt.Printf("%s Job: \"%s\"\n", getDiffSimbol(p.Diff.Type), *job.ID)
 		for _, field := range p.Diff.Fields {
-			if field.Type == "Edited" || verbosePlan {
-				fmt.Printf("    %s %s: %s -> %s\n", getDiffSimbol(field.Type), field.Name, field.Old, field.New)
-			}
+			printFieldsDiff(field, verbosePlan, 1)
 		}
 		for _, object := range p.Diff.Objects {
-			if object.Type == "Edited" || verbosePlan {
-				fmt.Printf("    %s %s\n", getDiffSimbol(object.Type), object.Name)
+			printObjectDiff(object, verbosePlan, 1)
+		}
+		// Print the task groups changes
+		for _, tg := range p.Diff.TaskGroups {
+			// If no changes happed during the plan, continue to the next Task Group
+			if tg.Type == "None" {
+				continue
+			}
+
+			// Build indentation level
+			indStr := strings.Repeat(indentationStyle, 1)
+
+			fmt.Printf("%s%s Task Group: \"%s\"\n", indStr, getDiffSimbol(tg.Type), tg.Name)
+
+			for _, field := range tg.Fields {
+				printFieldsDiff(field, verbosePlan, 2)
+			}
+
+			for _, obj := range tg.Objects {
+				printObjectDiff(obj, verbosePlan, 2)
+			}
+
+			for _, task := range tg.Tasks {
+				// Build indentation level
+				indStr := strings.Repeat(indentationStyle, 2)
+
+				ann := strings.Join(task.Annotations, ", ")
+				fmt.Printf("%s%s Task: \"%s\" (%s)\n", indStr, getDiffSimbol(task.Type), task.Name, ann)
+
+				for _, field := range task.Fields {
+					printFieldsDiff(field, verbosePlan, 3)
+				}
+
+				for _, obj := range task.Objects {
+					printObjectDiff(obj, verbosePlan, 3)
+				}
+
 			}
 		}
-		for _, tg := range p.Diff.TaskGroups {
-			fmt.Printf("  %s Task Group: %s\n", getDiffSimbol(tg.Type), tg.Name)
-		}
+		fmt.Println()
 	}
-
 	// Flushes all the table output after all the plans output.
 	w.Flush()
 	wt.Close()

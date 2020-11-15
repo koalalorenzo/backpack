@@ -283,10 +283,10 @@ job "example" {
       #
       #     https://www.nomadproject.io/docs/job-specification/logs.html
       #
-      # logs {
-      #   max_files     = 10
-      #   max_file_size = 15
-      # }
+      logs {
+        max_files     = 10
+        max_file_size = 15
+      }
 
       # The "resources" stanza describes the requirements a task needs to
       # execute. Resource requirements include memory, network, cpu, and more.

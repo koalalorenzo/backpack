@@ -118,17 +118,3 @@ func getValuesFromCLIInput(cmd *cobra.Command) pkg.ValuesType {
 	}
 	return values
 }
-
-// getDiffSimbol returns the symbol to use for Plan output
-func getDiffSimbol(diffType string) string {
-	switch diffType {
-	case "Added":
-		return "+"
-	case "Deleted":
-		return "-"
-	case "Edited":
-		return "+/-"
-	default:
-		return ""
-	}
-}
